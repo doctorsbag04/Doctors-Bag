@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title> doctors Contact list</title>
+   <head>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+  .then(registration => {
+    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  })
+  .catch(error => {
+    console.log('ServiceWorker registration failed: ', error);
+  });
+}
+</script>
+</head>
+
+    <style>
+          @font-face {
+    font-family: 'Helvetica';
+    src: url('fonts/Helvetica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+        body {
+            font-family: 'Helvetica', sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+            .main-container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+    .top-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+
+        }
+
+
+#search-container {
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-right: auto;
+    width: 100%;
+    position: relative;
+
+}
+
+#search-box {
+   padding: 10px;
+    border-radius: 20px;
+    width: 1400px;
+    font-size: 15px;
+    box-sizing: border-box;
+    background: #f7f7f7;
+    border: 2px solid transparent;
+
+}
+
+#microphone-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+        .top-container {
+            top: 0;
+        }
+        .logo-header {
+            display: flex;
+            align-items: center;
+        }
+        #logo {
+            width: 50px;
+            display: block;
+            margin-right: 10px;
+        }
+              #logo:hover {
+            transform: scale(1.1);
+        }
+
+        .container {
+            width: 100%;
+            height: 600px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+             margin-top: 80px;
+            text-align: center;
+            color: #333;
+            font-size: 40px; /* Adjust font size for better readability */
+            margin-bottom: 40px;
+        }
+
+                       .mic-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px; /* Adjusted margin */
+        }
+
+        
+    
+        p {
+            text-align: justify;
+            color: #ff0000;
+        }
+              .dropdown {
+            margin: 10px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+/* Custom vertical scrollbar styles */
+::-webkit-scrollbar {
+  width: 1px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar */
+  border-radius: 2px; /* Round the corners of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Track color */
+}
+
+        .dropdown label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .dropdown select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .dropdown select:focus {
+            border-color: #333;
+            outline: none;
+        }
+
+        .contact-list {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .contact-item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact-item a {
+            text-decoration: none;
+            color: #2dd6c0;
+            font-weight: bold;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+             @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 600px) {
+            .main-container {
+                padding: 10px;
+            }
+
+            .container {
+                padding-top: 60px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .dropdown select {
+                font-size: 14px;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .contact-item a {
+                margin-top: 10px;
+            }
+
+             #search-container {
+                 justify-content: center;
+                 width: 100%;
+             }
+
+          #search-box {
+           width: 350px;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+<div class="top-container">
+  <div class="logo-header">
+     <img id="logo" src="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" alt="Logo"></a>
+    <div id="search-container">
+      <input type="text" id="search-box" placeholder="Search Doctors Bag">
+      <button id="microphone-btn">
+        <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
+      </button>
+    </div>
+  </div> 
+</div>
+<div class="main-container">
+    <div class="container">
+        <h1>DOCTORS CONTACT LIST</h1>
+        <div class="headline-container">
+            <div class="headline">
+            </div>
+        </div>
+        <div class="dropdown">
+        <label for="country">Country: </label>
+        <select id="country" onchange="populateStates()">
+            <option value="">Select Country</option>
+            <!-- Add countries here -->
+            <option value="USA">USA</option>
+            <option value="India">India</option>
+        </select>
+    </div>
+    <div class="dropdown">
+        <label for="state">State: </label>
+        <select id="state" onchange="populateDistricts()">
+            <option value="">Select State</option>
+        </select>
+    </div>
+    <div class="dropdown">
+        <label for="district">District: </label>
+        <select id="district" onchange="populatePlaces()">
+            <option value="">Select District</option>
+        </select>
+    </div>
+    <div class="dropdown">
+        <label for="place">Place: </label>
+        <select id="place" onchange="showContacts()">
+            <option value="">Select Place</option>
+        </select>
+    </div>
+    <ul id="contact-list" class="contact-list"></ul>
+
+<script>
+    
+    function activateMic() {
+        // Simulate voice input functionality
+        alert("Microphone activated. Please say your symptoms.");
+        // In a real implementation, you would use the Web Speech API to capture voice input
+    }
+function activateMic() {
+    // Check browser support
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        // Request user permission for microphone access
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(function(stream) {
+                // Create a SpeechRecognition object
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'en-US'; // Set language to English
+
+                // Start recognition
+                recognition.start();
+
+                // Event handler for when speech is recognized
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    const symptomsInput = document.getElementById('symptoms');
+                    symptomsInput.value = transcript; // Set input value to recognized text
+                    // Dispatch a change event to trigger any event listeners
+                    symptomsInput.dispatchEvent(new Event('change'));
+                    recognition.stop(); // Stop recognition
+                };
+
+                // Event handler for errors
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                };
+            })
+            .catch(function(error) {
+                console.error('Error accessing microphone:', error);
+            });
+    } else {
+        alert('Your browser does not support speech recognition.');
+    }
+}
+
+
+const data = {
+            USA: {
+                California: {
+                    "Los Angeles": ["Downtown", "Hollywood"],
+                    "San Francisco": ["Mission District", "Castro"]
+                },
+                Texas: {
+                    "Houston": ["Midtown", "Uptown"],
+                    "Dallas": ["Deep Ellum", "Bishop Arts District"]
+                }
+            },
+            India: {
+                Maharashtra: {
+                    "Mumbai": ["Andheri", "Borivali"],
+                    "Pune": ["Shivajinagar", "Kothrud"]
+                },
+                Karnataka: {
+                    "Bangalore": ["MG Road", "Whitefield"],
+                    "Mysore": ["Nazarbad", "Vijayanagar"]
+                },
+
+                AndhraPradesh: {
+                    "Anantapur": ["Anantapur", "Hindupur", "Guntakal"],
+                    "Anakapalle": ["Anakapalle", "Chodaram", "Narsipatnam"],
+                    "Annamayya": ["Madanapalle", "Rayachoti"],
+                    "Alluri_sitaramaraju": ["Paderu", "Rampachodavaram"],
+                    "Bapatla": ["Bapatla", "chirala"],
+                    "Chittoor": ["Chittoor", "PunganurS"],
+                    "Dr.B.R.Ambedkar_konaseema": ["Amalapuram", "Razole", "Ravulapalem"],
+                    "Eluru": ["Eluru", "Dendluru"],
+                    "East_godavari": ["Nazarbad", "Pitapuram"],
+                    "Guntur": ["Guntur", "tenali"],
+                    "Kadapa": ["Kadapa", "Poddatur", "Pulivendula", "Badvel"],
+                    "Kirshna": ["Vijayawada", "machalipatnam", "Gudivada", "Jaggaiahpet"],
+                    "Kurnool": ["Kurnool", "Adoni"],  
+                    "Kakinada": ["Kakinada", "Peddapuram"],
+                    "Nandyal": ["Nandyal", "Aatmakur"],
+                    "NTR": ["Mylavaram", "Nuzvid"],
+                    "Nellore": ["Nellore", "Kavali", "udayagiri", "Kaligiri", "Atmakur", "vinjamur", "Allur", "Buchireddypalem", "kovur"],
+                    "Prakasam": ["Ongole", "Kandukur", "Addanki"],    
+                    "Planadu": ["Narasaraopet", "Sattenapalle"],
+                    "parvathipuram_manyam": ["parvathipuram", "Salur"],
+                    "sri_satya_sai": ["Puttaparthi", "Dharmavaram"],
+                    "Srikakulam": ["Srikakulam", "Ichchapuram", "Palasa", "Rajam"],
+                    "Tirupati": ["Tirupati", "Gudur", "Srikalahasti"],
+                    "vishakapatnam": ["vishakapatnam", "Bheemunipatnam"],
+                    "vizianagaram": ["vizianagaram", "Bobbili"],
+                    "West_godavari": ["Tadepalligudem", "Bhimavaram", "Nidadavole"]
+                    
+                }
+
+            }
+        };
+
+        const contacts = {
+            "Kavali": [
+                { name: "Dr.K.Jansi", hospital: "Sreedhar Multispecialty hospital", area: "christian peta", phone: "9494247108" },
+                { name: "Dr.praveen", hospital: "Praveen Multispecialty hospital", area: "christian peta", phone: "7660823367" },
+                 { name: "Dr.K Anand kumar", hospital: "Anand Hospitals", area: "Ramamurthypet", phone: "86826251188" },
+               { name: "Dr.A.Umachand", hospital: "Dr.Umachand Hospital", area: "Paladurguvari street", phone: "988799913" },
+               { name: "Dr.K.Subbarao", hospital: "Sri sai Hospital", area: "christian peta", phone: "8626244933" }
+                         ],
+            "Kaligiri": [
+                { name: "#", hospital: "Government Hospital", area: "Kaligiri", phone: "#" },
+                { name: "Dr.Anki Reddy", hospital: "Dr Ramanadham Smaraka Praja vidyasaala", area: "Kaligiri", phone: "#" }
+            ],
+             "Nellore": [
+                { name: "Dr.Dinesh Reddy", hospital: "Apollo specialty hospital ", area: "Muthukur Rd", phone: "8616667333" },
+                 { name: "Dr.L.vineela", hospital: "Lotus hospital ", area: "pogathota", phone: "9533998838" }
+
+            ],"vinjamur": [
+                { name: "Dr.Masilamani", hospital: " Masilamani hospital ", area: "Vinjamur", phone: "#" },
+                 { name: "Dr.Shafi", hospital: "Shafi hospital ", area: "teacher's colony", phone: "#" }
+             ],
+                "udayagiri": [
+                { name: "Dr.CH.Sivakumar", hospital: " Sri Vidhya hospital ", area: "udayagiri", phone: "9493949300" },
+                 { name: "#", hospital: "Kotnis hospital ", area: "udayagiri", phone: "#" }
+             ],
+              "Atmakur": [
+                { name: "#", hospital: "Srivari Hospital", area: "Atmakur", phone: "8073717540" },
+                { name: "Dr.N.Venkateswalu", hospital: "Sri venkateswara", area: "Atmakur", phone: "#" }
+            ],
+
+             "Allur": [
+                { name: "#", hospital: "Vijaya hospital ", area: "Nall Vari Tota", phone: "8622276144" },
+                 { name: "Pagidi Abishy", hospital: "Teja clinic ", area: "Allur", phone: "#" }
+
+            ],"Buchireddypalem": [
+                { name: "Dr.T.Anil babu", hospital: " Redeemed hospital ", area: "bombay road", phone: "9959872823" },
+                 { name: "Dr.B.Sankar Reddy ", hospital: "Suryanadan hospital ", area: "bombay road", phone: "9933553376" }
+             ],
+                "kovur": [
+                { name: "Dr.Nischal Gummadi", hospital: " Gummadi hospital ", area: "kovur", phone: "8331833733" },
+                 { name: "#", hospital: "Banu hospital ", area: "Srinagar", phone: "#" }
+             ],
+
+
+
+        };
+
+        function populateStates() {
+            const countrySelect = document.getElementById("country");
+            const stateSelect = document.getElementById("state");
+            const districtSelect = document.getElementById("district");
+            const placeSelect = document.getElementById("place");
+
+            stateSelect.innerHTML = '<option value="">Select State</option>';
+            districtSelect.innerHTML = '<option value="">Select District</option>';
+            placeSelect.innerHTML = '<option value="">Select Place</option>';
+
+            if (countrySelect.value) {
+                const states = Object.keys(data[countrySelect.value]);
+                states.forEach(state => {
+                    const option = document.createElement("option");
+                    option.value = state;
+                    option.textContent = state;
+                    stateSelect.appendChild(option);
+                });
+            }
+        }
+
+        function populateDistricts() {
+            const countrySelect = document.getElementById("country");
+            const stateSelect = document.getElementById("state");
+            const districtSelect = document.getElementById("district");
+            const placeSelect = document.getElementById("place");
+
+            districtSelect.innerHTML = '<option value="">Select District</option>';
+            placeSelect.innerHTML = '<option value="">Select Place</option>';
+
+            if (stateSelect.value) {
+                const districts = Object.keys(data[countrySelect.value][stateSelect.value]);
+                districts.forEach(district => {
+                    const option = document.createElement("option");
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        function populatePlaces() {
+            const countrySelect = document.getElementById("country");
+            const stateSelect = document.getElementById("state");
+            const districtSelect = document.getElementById("district");
+            const placeSelect = document.getElementById("place");
+
+            placeSelect.innerHTML = '<option value="">Select Place</option>';
+
+            if (districtSelect.value) {
+                const places = data[countrySelect.value][stateSelect.value][districtSelect.value];
+                places.forEach(place => {
+                    const option = document.createElement("option");
+                    option.value = place;
+                    option.textContent = place;
+                    placeSelect.appendChild(option);
+                });
+            }
+        }
+
+        function showContacts() {
+            const placeSelect = document.getElementById("place");
+            const contactList = document.getElementById("contact-list");
+            contactList.innerHTML = '';
+
+            if (placeSelect.value) {
+                const contactsForPlace = contacts[placeSelect.value];
+                contactsForPlace.forEach(contact => {
+                    const li = document.createElement("li");
+                    li.className = "contact-item";
+                    li.innerHTML = `<span>${contact.name}, ${contact.hospital}, ${contact.area}</span> - <a href="tel:${contact.phone}">${contact.phone}</a>`;
+                    contactList.appendChild(li);
+                });
+            }
+        }
+
+
+
+// Handle search on Enter key
+  document.getElementById('search-box').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const searchTerm = event.target.value;
+      alert(`Search term: ${searchTerm}`);
+    }
+  });
+
+  // Voice search functionality
+  const microphoneBtn = document.getElementById('microphone-btn');
+  const searchBox = document.getElementById('search-box');
+
+  microphoneBtn.addEventListener('click', () => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.addEventListener('result', (event) => {
+      const speechResult = event.results[0][0].transcript;
+      searchBox.value = speechResult;
+      alert(`Search term: ${speechResult}`);
+    });
+
+    recognition.addEventListener('error', (event) => {
+      alert('Error occurred in recognition: ' + event.error);
+    });
+  });
+
+
+    </script>
+</body>
+
+</html>
+
+

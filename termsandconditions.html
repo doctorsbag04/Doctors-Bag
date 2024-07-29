@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<head>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+  .then(registration => {
+    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  })
+  .catch(error => {
+    console.log('ServiceWorker registration failed: ', error);
+  });
+}
+</script>
+</head>
+
+<style>
+  @font-face {
+    font-family: 'Helvetica';
+    src: url('fonts/Helvetica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+   body {
+    font-family: 'Helvetica', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    color: #000;
+    font-size: 20px;
+    text-align: justify;
+  }
+/* Custom vertical scrollbar styles */
+::-webkit-scrollbar {
+  width: 1px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar */
+  border-radius: 2px; /* Round the corners of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Track color */
+}
+
+  .container {
+    max-width: 100%; /* Adjusted to ensure it fits within the viewport */
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  header {
+    text-align: center;
+    padding-bottom: 10px;
+    margin-top: 70px; /* Add margin to create space between top container and header */
+  }
+
+  h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+
+
+ .top-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+
+  .top-container {
+    top: 0;
+  }
+
+  .logo-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #logo {
+    width: 50px;
+    display: block;
+    margin-right: 10px;
+  }
+
+  #search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-right: auto;
+    width: 100%;
+    position: relative;
+  }
+
+   #search-box {
+    padding: 10px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 100%; /* Increased width of the search box */
+    font-size: 15px;
+    box-sizing: border-box;
+    background: #f7f7f7;
+    border: 2px solid transparent;
+  }
+
+  #microphone-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+
+  footer {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+.nav-links {
+    margin-left: 20px;
+  }
+
+  .nav-links img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  /* Media query for mobile screens */
+  @media screen and (max-width: 767px) {
+    body {
+      font-size: 16px; /* Adjust font size for smaller screens */
+    }
+    header {
+      padding-bottom: 5px;
+    }
+    h1 {
+      font-size: 20px;
+    }
+    nav ul li a {
+      font-size: 16px;
+    }
+ #search-container {
+      justify-content: center;
+    }
+
+    #search-box {
+      max-width: 600px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="top-container">
+  <div class="logo-header">
+    <img id="logo" src="https://i.postimg.cc/B65ZFzcd/Picsart-24-05-11-15-23-37-488.png" alt="Logo">
+    <div id="search-container">
+      <input type="text" id="search-box" placeholder="Search Doctors Bag">
+      <button id="microphone-btn">
+        <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
+      </button>
+    </div>
+    <div class="nav-links">
+      <a href="home.html">
+        <img src="https://i.postimg.cc/prtF7C9K/house-black-silhouette-without-door.png" alt="Home">
+      </a>
+    </div>
+  </div> 
+</div>
+  <header>
+    <div>
+      <h1>TERMS & CONDITIONS</h1>
+    </div>
+  </header>
+  <p>Terms & Conditions
+
+By downloading or using the app, these terms will automatically apply to you – you should make sure therefore that you read them carefully before using the app. You’re not allowed to copy, or modify the app, any part of the app, or our trademarks in any way. You’re not allowed to attempt to extract the source code of the app, and you also shouldn’t try to translate the app into other languages, or make derivative versions. The app itself, and all the trade marks, copyright, database rights and other intellectual property rights related to it, still belong to Shaik sadhik.
+
+Shaik sadhik is committed to ensuring that the app is as useful and efficient as possible. For that reason, we reserve the right to make changes to the app or to charge for its services, at any time and for any reason. We will never charge you for the app or its services without making it very clear to you exactly what you’re paying for.
+
+The Doctors Bag app stores and processes personal data that you have provided to us, in order to provide my Service. It’s your responsibility to keep your phone and access to the app secure. We therefore recommend that you do not jailbreak or root your phone, which is the process of removing software restrictions and limitations imposed by the official operating system of your device. It could make your phone vulnerable to malware/viruses/malicious programs, compromise your phone’s security features and it could mean that the Doctors Bag app won’t work properly or at all.
+
+The app does use third party services that declare their own Terms and Conditions.
+
+Link to Terms and Conditions of third party service providers used by the app
+
+Google Play Services
+
+Facebook
+
+You should be aware that there are certain things that Shaik sadhik will not take responsibility for. Certain functions of the app will require the app to have an active internet connection. The connection can be Wi-Fi, or provided by your mobile network provider, but Shaik sadhik cannot take responsibility for the app not working at full functionality if you don’t have access to Wi-Fi, and you don’t have any of your data allowance left.
+
+If you’re using the app outside of an area with Wi-Fi, you should remember that your terms of the agreement with your mobile network provider will still apply. As a result, you may be charged by your mobile provider for the cost of data for the duration of the connection while accessing the app, or other third party charges. In using the app, you’re accepting responsibility for any such charges, including roaming data charges if you use the app outside of your home territory (i.e. region or country) without turning off data roaming. If you are not the bill payer for the device on which you’re using the app, please be aware that we assume that you have received permission from the bill payer for using the app.
+
+Along the same lines, Shaik sadhik cannot always take responsibility for the way you use the app i.e. You need to make sure that your device stays charged – if it runs out of battery and you can’t turn it on to avail the Service, Shaik sadhik cannot accept responsibility.
+
+With respect to Shaik sadhik’s responsibility for your use of the app, when you’re using the app, it’s important to bear in mind that although we endeavour to ensure that it is updated and correct at all times, we do rely on third parties to provide information to us so that we can make it available to you. Shaik sadhik accepts no liability for any loss, direct or indirect, you experience as a result of relying wholly on this functionality of the app.
+
+At some point, we may wish to update the app. The app is currently available on Android – the requirements for system(and for any additional systems we decide to extend the availability of the app to) may change, and you’ll need to download the updates if you want to keep using the app. Shaik sadhik does not promise that it will always update the app so that it is relevant to you and/or works with the Android version that you have installed on your device. However, you promise to always accept updates to the application when offered to you, We may also wish to stop providing the app, and may terminate use of it at any time without giving notice of termination to you. Unless we tell you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b) you must stop using the app, and (if needed) delete it from your device.
+
+Changes to This Terms and Conditions
+
+I may update our Terms and Conditions from time to time. Thus, you are advised to review this page periodically for any changes. I will notify you of any changes by posting the new Terms and Conditions on this page.
+
+These terms and conditions are effective as of 2021-06-11
+
+Contact Us
+
+If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at <a href="doctorsbagofficial@gmail.com">doctorsbagofficial@gmail.com</a>.</P>
+<footer><p> © All Rights Are Reserved </p></footer>
+</div>
+ <head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2538051649617281"
+     crossorigin="anonymous"></script>
+</head>
+
+<script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2538051649617281"
+     crossorigin="anonymous"></script>
+
+ document.addEventListener('DOMContentLoaded', () => {
+  // Define available pages
+  const availablePages = ['onlinemedicine.html', 'healthupdates.html', 'about.html', 'contact.html', 'injury.html', 'diagnosis.html', 'termsandconditions.html', 'bonefracture.html','home.html','corn.html','rinjuries.html','scarpionbite.html','scars.html','twisted.html'];
+
+  // Function to check if the page exists and redirect
+  const checkAndRedirect = (searchTerm) => {
+    const formattedSearchTerm = searchTerm.replace(/\s+/g, '').toLowerCase() + '.html';
+    if (availablePages.includes(formattedSearchTerm)) {
+      window.location.href = formattedSearchTerm;
+    } else {
+      alert('Page not found');
+    }
+  };
+
+  // Handle search on Enter key
+  document.getElementById('search-box').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const searchTerm = event.target.value;
+      checkAndRedirect(searchTerm);
+    }
+  });
+
+  // Voice search functionality
+  const microphoneBtn = document.getElementById('microphone-btn');
+  const searchBox = document.getElementById('search-box');
+
+  microphoneBtn.addEventListener('click', () => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.addEventListener('result', (event) => {
+      const speechResult = event.results[0][0].transcript;
+      searchBox.value = speechResult;
+      checkAndRedirect(speechResult);
+    });
+
+    recognition.addEventListener('error', (event) => {
+      alert('Error occurred in recognition: ' + event.error);
+    });
+  });
+});
+
+</script>
+</body>
+</html>

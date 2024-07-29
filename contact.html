@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Contact Form</title>
+<head>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+  .then(registration => {
+    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  })
+  .catch(error => {
+    console.log('ServiceWorker registration failed: ', error);
+  });
+}
+</script>
+</head>
+<style>
+ @font-face {
+    font-family: 'Helvetica';
+    src: url('fonts/Helvetica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+  html, body {
+    margin: 0;
+    padding: 0;
+  font-family: 'Helvetica', sans-serif;
+    background-color: #fff;
+    color: #fff;
+    font-size: 26px;
+    text-align: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Make the page non-scrollable */
+  }
+  
+  .container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  header {
+    display: none; /* Hide the header for full screen form */
+  }
+
+
+ .top-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+
+  .top-container {
+    top: 0;
+  }
+
+  .logo-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #logo {
+    width: 50px;
+    display: block;
+    margin-right: 10px;
+  }
+
+  #search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-right: auto;
+    width: 100%;
+    position: relative;
+  }
+
+ #search-box {
+  padding: 10px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 100%;
+  font-size: 15px;
+  box-sizing: border-box;
+  background: #f7f7f7;
+  border: 2px solid transparent;
+}
+
+
+  #microphone-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .contact {
+    background-color: #fff;
+    padding: 30px;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+  }
+
+  .contact h1 {
+    font-size: 36px;
+    text-align: center;
+    color: #2dd6c0;
+  }
+
+  .contact .input-box {
+    width: 400px;
+    margin: 20px 0;
+  }
+
+  .contact .input-box input,
+  .contact .input-box textarea {
+    width: 400px;
+    background: transparent;
+    border: none;
+    outline: solid 3px;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 15px;
+    color: #2dd6c0;
+    padding-left: 25px;
+    margin-bottom: 20px;
+  }
+
+  .contact .input-box textarea {
+    height: 100px;
+  }
+
+  .contact .btn {
+    width: 100px;
+    max-width: 200px;
+    height: 45px;
+    background: #2dd6c0;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+
+  .contact .btn:hover {
+    background-color: #808080;
+  }
+
+  footer {
+    color: #666;
+    font-size: 15px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+  }
+ .nav-links {
+    margin-left: 20px;
+  }
+
+  .nav-links img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+  body {
+    font-size: 18px;
+  }
+
+  .contact {
+    width: 100%; /* Adjusted width for mobile screens */
+    max-width: 410px; /* Set maximum width */
+    position: relative; /* Remove fixed positioning */
+    margin-top: 50px; /* Add space from the top */
+  }
+
+  .contact .input-box input,
+  .contact .input-box textarea {
+    width: calc(100% - 50px); /* Adjusted input width */
+  }
+
+  .contact .btn {
+    width: 200px;
+    max-width: 300px; /* Ensure maximum width */
+  }
+
+   #search-container {
+      justify-content: center;
+    }
+
+    #search-box {
+      max-width: 600px;
+    }
+
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="top-container">
+  <div class="logo-header">
+    <img id="logo" src="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" alt="Logo">
+    <div id="search-container">
+     <input type="text" id="search-box" placeholder="Search Doctors Bag">
+      <button id="microphone-btn">
+        <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
+      </button>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">
+        <img src="https://i.postimg.cc/prtF7C9K/house-black-silhouette-without-door.png" alt="Home">
+      </a>
+    </div>
+  </div> 
+</div>
+
+<div class="container">
+  <div class="contact" id="contact">
+    <form action="#" id="contactForm">
+      <h1>Contact us</h1>
+      <div class="input-box">
+        <input type="text" placeholder="Your Name" id="name" required>
+      </div>
+      <div class="input-box">
+        <input type="email" placeholder="Your Email" id="email" required>
+      </div>
+      <div class="input-box">
+        <textarea placeholder="Your Message" id="message" required></textarea>
+      </div>
+      <button type="submit" class="btn">Submit</button>
+    </form>
+  </div>
+</div>
+<footer><p>© All Rights Are Reserved</p
+</body>
+ <head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2538051649617281"
+     crossorigin="anonymous"></script>
+</head>
+
+</html>
+

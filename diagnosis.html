@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Online Diagnosis</title>
+    <style>
+        
+  @font-face {
+    font-family: 'Helvetica';
+    src: url('fonts/Helvetica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+        body {
+              font-family: 'Helvetica', sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+        .main-container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .top-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #fff;
+            position: fixed;
+            width: 100%;
+            z-index: 1001;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .top-container {
+            top: 0;
+        }
+#search-container {
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-right: auto;
+    width: 100%;
+    position: relative;
+
+}
+
+#search-box {
+   padding: 10px;
+    border-radius: 20px;
+    width: 1400px;
+    font-size: 15px;
+    box-sizing: border-box;
+    background: #f7f7f7;
+    border: 2px solid transparent;
+
+}
+
+#microphone-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+        .logo-header {
+            display: flex;
+            align-items: center;
+        }
+
+        #logo {
+            width: 50px;
+            display: block;
+            margin-right: 10px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 90px; /* Adjusted for fixed top-container */
+        }
+
+        #logo:hover {
+            transform: scale(1.1);
+        }
+
+        .container {
+            width: 100%;
+            height: 600px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+/* Custom vertical scrollbar styles */
+::-webkit-scrollbar {
+  width: 1px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar */
+  border-radius: 2px; /* Round the corners of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Track color */
+}
+
+
+        h1 {
+            margin-top: 100px;
+            text-align: center;
+            color: #333;
+            font-size: 40px; /* Adjust font size for better readability */
+            margin-bottom: 10px;
+        }
+
+        label {
+           display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+
+        }
+
+        select {
+             width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        select:focus {
+            outline: none;
+            border-color:#2dd6c0; /* Highlight border on focus */
+            box-shadow: 0 0 5px rgba(45, 214, 192, 0.5); /* Add a subtle box shadow */
+        }
+
+       .diabutton {
+            display: inline-block;
+            width: 150px;
+            padding: 15px;
+            background-color: #2dd6c0;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 17px;
+            cursor: pointer;
+            margin-top: 30px;
+             margin-right: 45px;
+            margin-bottom: 50px;
+
+        }
+
+ .pdfbutton {
+            display: inline-block;
+            width: 150px;
+            height: 50px;
+            padding: 15px;
+            background: #f7f7f7;
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            font-size: 17px;
+            cursor: pointer;
+            margin-left: 50px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+            text-align: center;
+            justify-content: center;
+
+                    }
+
+        .dropdown {
+            margin: 10px 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+            #result {
+            margin-bottom: 20px;
+            font-size: 25px;
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #medication {
+            font-size: 20px;
+            color: #555;
+            text-align: center;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ff0000;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: justify;
+            color: #ff0000;
+        }
+
+        .headline-container {
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 50px;
+        }
+
+        .headline {
+            animation: scroll 10s linear infinite; /* Adjust duration as needed */
+            white-space: nowrap;
+        }
+
+        .headline span {
+            display: inline-block;
+            color: #ff0000;
+            padding-right: 100%; /* Ensure the text scrolls completely out of view */
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 600px) {
+            .main-container {
+                width: 100%;
+            }
+
+          .diabutton {
+          margin-right: 20px;
+          margin-top: 30px;
+          margin-bottom: 50px;
+          width: 150px;
+          height: 50px;
+
+
+   }
+
+ .pdfbutton {
+          margin-left: 20px;
+          margin-top: 30px;
+          margin-bottom: 50px;
+          width: 150px;
+          height: 50px;
+   }
+          
+            .container {
+                width: 100%;
+            }
+
+            select {
+                width: 90%; /* Adjusted width for smaller screens */
+                margin: 10px; /* Center the select horizontally */
+            }
+
+
+          #search-box {
+           width: 350px;
+            }
+
+        }
+    </style>
+</head>
+<body>
+<div class="top-container">
+  <div class="logo-header">
+     <img id="logo" src="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" alt="Logo"></a>
+    <div id="search-container">
+      <input type="text" id="search-box" placeholder="Search Doctors Bag">
+      <button id="microphone-btn">
+        <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
+      </button>
+    </div>
+  </div> 
+</div>
+<div class="main-container">
+    <div class="container">
+        <header>
+            <h1>Online Diagnosis</h1>
+        </header>
+        <div class="headline-container">
+            <div class="headline">
+                <span>Please note that the result of diagnosis may not be accurate. If you have any major issues, consult a doctor.</span>
+            </div>
+        </div>
+        <div id="result"></div>
+        <div id="medication"></div>
+        <form id="diagnosisForm">
+             <div class="dropdown">
+            <label for="symptom1">Select primary symptom:</label>
+            <select id="symptom1" name="symptom1">
+                <option value="0">Select symptom</option>
+                <option value="1">high temperature</option>
+                <option value="2">Headache</option>
+                <option value="3">Sore Throat</option>
+                <option value="4">Stomach Pain</option>
+                <option value="5">Nausea</option>
+                <option value="5">Body pains</option>
+                <option value="6">Runny Nose</option>
+                <option value="7">Sneezing</option>
+                <option value="8">Fatigue</option>
+                <option value="9">Dizziness</option>
+                <option value="10">Cough</option>
+                <option value="11">Chest pain</option>
+                <option value="12">Rash</option>
+                <option value="13">Itching</option>
+                <option value="14">Fainting</option>
+                <option value="15">Pale skin</option>
+                <option value="16">Muscle weakness</option>
+                <option value="17">Chills</option>
+                <option value="18">Frequent urination</option>
+                <option value="19">Joint pain</option>
+                <option value="20">Blurred vision</option>
+                <option value="21">Difficulty swallowing</option>
+                <option value="22">Painful urination</option>
+                <option value="23">Shortness of breadth</option>
+                <option value="24">Night sweats</option>
+                <option value="25">Back pain</option>
+                <option value="26">Vomiting</option>
+                <option value="27">Abdominal pain</option>
+                <option value="28">Low mood</option>
+                
+
+            </select>
+             <div>
+
+              <div class="dropdown">
+            <label for="symptom2">Select second symptom:</label>
+            <select id="symptom2" name="symptom2">
+                <option value="0">Select symptom</option>
+                <option value="1">high temperature</option>
+                <option value="2">Headache</option>
+                <option value="3">Sore Throat</option>
+                <option value="4">Stomach Pain</option>
+                <option value="5">Nausea</option>
+                <option value="5">Body pain</option>
+                <option value="6">Runny Nose</option>
+                <option value="7">Sneezing</option>
+                <option value="8">Fatigue</option>
+                <option value="9">Dizziness</option>
+                <option value="10">Cough</option>
+                <option value="11">Chest pain</option>
+                <option value="12">itching</option>
+                <option value="13">Itchy eyes</option>
+                <option value="14">Fainting</option>
+                <option value="15">Pale skin</option>
+                <option value="16">weakness</option>
+                <option value="17">Chills</option>
+                <option value="18">cloudy urine</option>
+                <option value="19">Joint pain</option>
+                <option value="20">eye pain</option>
+                <option value="21">swelling</option>
+                <option value="22">Difficulty urination</option>
+                <option value="23">Shortness of breadth</option>
+                <option value="24">visual distrubence</option>
+                <option value="25">stiffness</option>
+                <option value="26">Vomiting</option>
+                <option value="27">wheezing</option>
+                <option value="28">loss of interst</option>
+                <option value="29">sensitivity to light</option>
+                <option value="30">shakiness</option>
+                <option value="31">cramps</option>
+                <option value="32">Thirst</option>
+                <option value="33">Weight gain</option>
+                <option value="33">Urinary Urgency</option>
+
+
+            </select>
+              <div>
+
+            <div class="dropdown">
+             <label for="symptom3">Select Third symptom:</label>
+            <select id="symptom3" name="symptom3">
+                 <option value="0">Select symptom</option>
+                <option value="1">high temperature</option>
+                <option value="2">Headache</option>
+                <option value="3">Sore Throat</option>
+                <option value="4">Dry mouth</option>
+                <option value="5">Nausea</option>
+                <option value="5">cold tolerance</option>
+                <option value="6">morning stiffness</option>
+                <option value="7">Sneezing</option>
+                <option value="8">Fatigue</option>
+                <option value="9">Dizziness</option>
+                <option value="10">Cough</option>
+                <option value="11">Chest pain</option>
+                <option value="12">Burning sensation while urinating </option>
+                <option value="13">Itchy eyes</option>
+                <option value="14">increased pain</option>
+                <option value="15">Pale skin</option>
+                <option value="16">chest tighness</option>
+                <option value="17">sleep distrubence</option>
+                <option value="18">stiff nick</option>
+                <option value="19">swelling</option>
+                <option value="20">Shortness of breadth</option>
+                <option value="21">Vomiting</option>
+                <option value="22">Abdominal pain </option>
+                
+
+            </select>
+              <div>
+
+             <div class="dropdown">
+             <label for="symptom4">Select Fourth symptom:</label>
+            <select id="symptom4" name="symptom4">
+                <option value="0">Select symptom</option>
+                <option value="1">high temperature</option>
+                <option value="2">Headache</option>
+                <option value="3">Sore Throat</option>
+                <option value="4">Dry mouth</option>
+                <option value="5">Nausea</option>
+                <option value="5">frequent urination</option>
+                <option value="6">diarhea</option>
+                <option value="7">Sneezing</option>
+                <option value="8">Fatigue</option>
+                <option value="9">Dizziness</option>
+                <option value="10">Cough</option>
+                <option value="11">Chest pain</option>
+                <option value="12">dark urine</option>
+                <option value="13">Itchy eyes</option>
+                <option value="14">increased pain</option>
+                <option value="15">Pale skin</option>
+                <option value="16">swelling</option>
+                <option value="17">Shortness of breadth</option>
+                <option value="18">Vomiting</option>
+               
+            </select>
+            <div>
+
+             <div class="dropdown">
+            <label for="symptom5">Select Fifth symptom:</label>
+            <select id="symptom5" name="symptom5">
+                 <option value="0">Select symptom</option>
+                <option value="1">high temperature</option>
+                <option value="2">Headache</option>
+                <option value="3">Sore Throat</option>
+                <option value="4">body pains</option>
+                <option value="5">Nausea</option>
+                <option value="5">frequent urination</option>
+                <option value="6">diarhea</option>
+                <option value="7">Sneezing</option>
+                <option value="8">Fatigue</option>
+                <option value="9">Dizziness</option>
+                <option value="10">Cough</option>
+                <option value="11">yellowness of skin </option>
+                <option value="12">dark urine</option>
+                <option value="13">appetite changes</option>
+                <option value="14">increased pain</option>
+                <option value="15">Pale skin</option>
+                <option value="16">swelling</option>
+                <option value="17">Shortness of breadth</option>
+                <option value="18">Vomiting</option>
+            </select>
+           <div>
+           <div>
+            <button class="diabutton" type="button" onclick="generateDiagnosis()">Diagnose</button>
+<button class="pdfbutton" type="button" onclick="generatePDF()"> PDF Download</button>
+          </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    async function generatePDF() {
+        const { jsPDF } = window.jspdf;
+
+        const symptoms = [
+            document.getElementById('symptom1').value,
+            document.getElementById('symptom2').value,
+            document.getElementById('symptom3').value,
+            document.getElementById('symptom4').value,
+            document.getElementById('symptom5').value
+        ].filter(symptom => symptom !== '');
+
+        const diagnosis = document.getElementById('result').textContent;
+        const medication = document.getElementById('medication').textContent;
+
+        const doc = new jsPDF();
+
+        // Add logo
+        const logoUrl = "https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png";
+        const logo = new Image();
+        logo.src = logoUrl;
+        logo.onload = () => {
+            doc.addImage(logo, 'PNG', 20, 10, 20, 20); // Adjust size and position as needed
+
+            // Add "DOCTOR'S BAG" title beside the logo and make it bold
+            doc.setFontSize(10);
+            doc.setFont(undefined, 'bold');
+            doc.text("DOCTOR'S BAG", 20, 35);
+
+            // Add a line between the top section and the title
+            doc.setLineWidth(0.5);
+            doc.line(20, 40, doc.internal.pageSize.getWidth() - 20, 40);
+
+            // Center "Diagnosis Report" title and make it bold
+            doc.setFontSize(30);
+            doc.setFont(undefined, 'bold');
+            doc.text("Diagnosis Report", doc.internal.pageSize.getWidth() / 2, 30, { align: 'center' });
+
+            // Display diagnosis
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'normal');
+            doc.text(diagnosis, 20, 60);
+
+            // Display medication
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'normal');
+            doc.text(medication, 20, 80);
+
+           var imgData = 'https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png';
+            
+            // Add the image as a watermark
+           doc.addImage(imgData, 'PNG', 80, 140, 50, 50);
+          
+
+            // Add warning message at the bottom
+            const warningMessage = "Please note that this diagnosis page is designed for basic health issues and the results of diagnosis may not be accurate, so if you have any major health issues, stop using this and consult a certified doctor and take immediate treatment.";
+            doc.setFontSize(14);
+            doc.setFont(undefined, 'bold');
+            doc.text("Warning", 20, doc.internal.pageSize.getHeight() - 30);
+
+            doc.setFontSize(15);
+            doc.setFont(undefined, 'normal');
+            doc.text(warningMessage, 20, doc.internal.pageSize.getHeight() - 20, {
+                maxWidth: doc.internal.pageSize.getWidth() - 40
+            });
+
+
+            // Save the PDF
+            doc.save("diagnosis_report.pdf");
+        };
+    }
+
+ function generateDiagnosis() {
+    const symptoms = [
+        document.getElementById('symptom1').value,
+        document.getElementById('symptom2').value,
+        document.getElementById('symptom3').value,
+        document.getElementById('symptom4').value,
+        document.getElementById('symptom5').value
+    ].filter(symptom => symptom !== '0');
+
+    console.log('Selected Symptoms:', symptoms);
+
+    if (symptoms.length === 0) {
+        alert('Please select at least one symptom.');
+        return;
+    }
+
+    let diagnosis = '';
+    let medication = '';
+
+    // Check different combinations of symptoms and provide a diagnosis
+    if (symptoms.length === 1) {
+        if (symptoms.includes('1')) {
+            diagnosis = 'You might have Fever';
+            medication = 'Rest and monitor temperature. Drink plenty of fluids.';
+        } else if (symptoms.includes('2')) {
+            diagnosis = 'You might have Headache';
+            medication = 'Take pain relievers and rest in a quiet, dark room.';
+        } else if (symptoms.includes('3')) {
+            diagnosis = 'You might have Common cold';
+            medication = 'Gargle with warm salt water and drink warm fluids.';
+        } else if (symptoms.includes('4')) {
+            diagnosis = 'You might have Stomach Pain';
+            medication = 'Avoid solid foods, drink clear fluids, and rest.';
+        } else if (symptoms.includes('5')) {
+            diagnosis = 'You might have Nausea';
+            medication = 'Drink clear fluids, avoid solid foods, and rest.';
+        } else if (symptoms.includes('6')) {
+            diagnosis = 'You might have flu or allergies';
+            medication = 'Use nasal decongestants and drink plenty of fluids.';
+        } else if (symptoms.includes('7')) {
+            diagnosis = 'You might have flu or allergies';
+            medication = 'Take antihistamines and avoid allergens.';
+        } else if (symptoms.includes('8')) {
+            diagnosis = 'You might have Dehydration';
+            medication = 'Ensure adequate rest and maintain a balanced diet.';
+        } else if (symptoms.includes('9')) {
+            diagnosis = 'You might have Dehydration';
+            medication = 'Stay hydrated, avoid sudden movements, and rest.';
+        } else if (symptoms.includes('10')) {
+            diagnosis = 'You might have Cough';
+            medication = 'Use cough suppressants and drink warm fluids.';
+        } else if (symptoms.includes('11')) {
+            diagnosis = 'You might have Bronchitis';
+            medication = 'Consult a doctor immediately.';
+        } else if (symptoms.includes('12')) {
+            diagnosis = 'You might have Dermatitis';
+            medication = 'Apply calamine lotion and avoid scratching.';
+        } else if (symptoms.includes('13')) {
+            diagnosis = 'You might have skin Allergies';
+            medication = 'Use antihistamines and apply moisturizing lotion.';
+        } else if (symptoms.includes('14')) {
+            diagnosis = 'You might have Fainting';
+            medication = 'Lie down and elevate your legs.';
+        } else if (symptoms.includes('15')) {
+            diagnosis = 'You might have Pale Skin';
+            medication = 'Ensure adequate iron intake and consult a doctor.';
+        } else if (symptoms.includes('16')) {
+            diagnosis = 'You might have Muscle Weakness';
+            medication = 'Maintain a balanced diet and exercise regularly.';
+        } else if (symptoms.includes('17')) {
+            diagnosis = 'Normal Chills';
+            medication = 'Keep warm and stay hydrated.';
+        } else if (symptoms.includes('18')) {
+            diagnosis = 'You have Frequent Urination';
+            medication = 'Monitor fluid intake and consult a doctor if persistent.';
+        } else if (symptoms.includes('19')) {
+            diagnosis = 'It is normal Joint Pain';
+            medication = 'Take anti-inflammatory medications and rest.';
+        } else if (symptoms.includes('20')) {
+            diagnosis = 'You might have Vision problem';
+            medication = 'Consult an eye specialist.';
+        } else if (symptoms.includes('21')) {
+            diagnosis = 'You have Difficulty Swallowing';
+            medication = 'Drink warm fluids and consult a doctor if persistent.';
+        } else if (symptoms.includes('22')) {
+            diagnosis = 'You might have Urinary Tract infection';
+            medication = 'Consult a doctor.';
+        } else if (symptoms.includes('23')) {
+            diagnosis = 'You might have Asthma';
+            medication = 'Consult a doctor immediately.';
+        } else if (symptoms.includes('24')) {
+            diagnosis = 'Night Sweats';
+            medication = 'Ensure proper ventilation and consult a doctor.';
+        } else if (symptoms.includes('25')) {
+            diagnosis = 'Back Pain';
+            medication = 'Apply heat or cold packs and take pain relievers.';
+        } else if (symptoms.includes('26')) {
+            diagnosis = 'Normal Vomiting';
+            medication = 'Avoid solid foods, drink clear fluids, and rest.';
+        } else if (symptoms.includes('27')) {
+            diagnosis = 'Abdominal Pain';
+            medication = 'Avoid solid foods, drink clear fluids, and rest.';
+        } else if (symptoms.includes('28')) {
+            diagnosis = 'It is normal low mood';
+            medication = 'Ensure adequate rest, maintain a healthy diet, and seek counseling if needed.';
+        } 
+    } else if (symptoms.length === 2) {
+        if (symptoms.includes('1') && symptoms.includes('2')) {
+            diagnosis = 'You might have Flu';
+            medication = 'Rest and drink plenty of fluids. Take paracetamol or ibuprofen.';
+        } else if (symptoms.includes('3') && symptoms.includes('6')) {
+            diagnosis = 'You might have Common Cold';
+            medication = 'Rest and drink warm fluids. Gargle with warm salt water.';
+        } else if (symptoms.includes('4') && symptoms.includes('5')) {
+            diagnosis = 'You might have Gastritis';
+            medication = 'Avoid solid foods, drink clear fluids, and take antacids.';
+        } else if (symptoms.includes('7') && symptoms.includes('8')) {
+            diagnosis = 'You might have Allergic Rhinitis';
+            medication = 'Take antihistamines and avoid allergens.';
+        } else if (symptoms.includes('9') && symptoms.includes('10')) {
+            diagnosis = 'You might have Bronchitis';
+            medication = 'Rest, drink fluids, and use a humidifier.';
+        } else if (symptoms.includes('11') && symptoms.includes('12')) {
+            diagnosis = 'You might have Shingles';
+            medication = 'Take antiviral medications and apply calamine lotion.';
+        } else if (symptoms.includes('13') && symptoms.includes('14')) {
+            diagnosis = 'You might have Anemia';
+            medication = 'Increase iron intake and consult a doctor.';
+        } else if (symptoms.includes('15') && symptoms.includes('16')) {
+            diagnosis = 'You might have Chronic Fatigue Syndrome';
+            medication = 'Ensure adequate rest and maintain a balanced diet.';
+        } else if (symptoms.includes('17') && symptoms.includes('18')) {
+            diagnosis = 'You might have Urinary Tract Infection (UTI)';
+            medication = 'Drink plenty of water and take prescribed antibiotics.';
+        } else if (symptoms.includes('19') && symptoms.includes('20')) {
+            diagnosis = 'You might have Arthritis';
+            medication = 'Take anti-inflammatory medications and consult a doctor for long-term management.';
+        } 
+    } else if (symptoms.length === 3) {
+        if (symptoms.includes('1') && symptoms.includes('2') && symptoms.includes('3')) {
+            diagnosis = 'You might have Strep Throat';
+            medication = 'Take antibiotics, rest, and drink warm fluids.';
+        } else if (symptoms.includes('4') && symptoms.includes('5') && symptoms.includes('6')) {
+            diagnosis = 'You might have Viral Gastroenteritis';
+            medication = 'Avoid solid foods, drink clear fluids, and rest.';
+        } else if (symptoms.includes('7') && symptoms.includes('8') && symptoms.includes('9')) {
+            diagnosis = 'You might have Sinusitis';
+            medication = 'Take decongestants, rest, and drink warm fluids.';
+        } else if (symptoms.includes('10') && symptoms.includes('11') && symptoms.includes('12')) {
+            diagnosis = 'You might have Pneumonia';
+            medication = 'Take antibiotics, rest, and drink fluids.';
+        } else if (symptoms.includes('13') && symptoms.includes('14') && symptoms.includes('15')) {
+            diagnosis = 'You might have Hypothyroidism';
+            medication = 'Take thyroid hormone replacement and consult a doctor.';
+        } else if (symptoms.includes('16') && symptoms.includes('17') && symptoms.includes('18')) {
+            diagnosis = 'You might have Diabetes';
+            medication = 'Monitor blood sugar levels, take medications, and maintain a healthy diet.';
+        } else if (symptoms.includes('19') && symptoms.includes('20') && symptoms.includes('21')) {
+            diagnosis = 'You might have Multiple Sclerosis';
+            medication = 'Consult a doctor for a comprehensive treatment plan.';
+        } else if (symptoms.includes('22') && symptoms.includes('23') && symptoms.includes('24')) {
+            diagnosis = 'You might have Tuberculosis';
+            medication = 'Consult a doctor immediately.';
+        } 
+    } else if (symptoms.length === 4) {
+        if (symptoms.includes('1') && symptoms.includes('2') && symptoms.includes('3') && symptoms.includes('10')) {
+            diagnosis = 'You might have Bronchitis';
+            medication = 'Rest, drink fluids, and use a humidifier.';
+        } else if (symptoms.includes('4') && symptoms.includes('5') && symptoms.includes('6') && symptoms.includes('9')) {
+            diagnosis = 'You might have Food Poisoning';
+            medication = 'Avoid solid foods, drink clear fluids, and rest.';
+        } else if (symptoms.includes('7') && symptoms.includes('8') && symptoms.includes('11') && symptoms.includes('12')) {
+            diagnosis = 'You might have Hepatitis';
+            medication = 'Avoid alcohol, rest, and take prescribed medications.';
+        } else if (symptoms.includes('13') && symptoms.includes('14') && symptoms.includes('15') && symptoms.includes('16')) {
+            diagnosis = 'You might have Lupus';
+            medication = 'Take anti-inflammatory medications and consult a doctor.';
+        } else if (symptoms.includes('17') && symptoms.includes('18') && symptoms.includes('19') && symptoms.includes('20')) {
+            diagnosis = 'You might have Rheumatoid Arthritis';
+            medication = 'Take anti-inflammatory medications and consult a doctor for long-term management.';
+        } else if (symptoms.includes('21') && symptoms.includes('22') && symptoms.includes('23') && symptoms.includes('24')) {
+            diagnosis = 'You might have Chronic Obstructive Pulmonary Disease (COPD)';
+            medication = 'Avoid smoking, take prescribed medications, and use a humidifier.';
+        } else if (symptoms.includes('25') && symptoms.includes('26') && symptoms.includes('27') && symptoms.includes('28')) {
+            diagnosis = 'You might have Peptic Ulcer';
+            medication = 'Avoid spicy foods, take antacids, and consult a doctor.';
+        } 
+    } else if (symptoms.length === 5) {
+        if (symptoms.includes('1') && symptoms.includes('2') && symptoms.includes('3') && symptoms.includes('10') && symptoms.includes('8')) {
+            diagnosis = 'You might have Severe Flu';
+            medication = 'Rest, drink plenty of fluids, and take antiviral medications if prescribed.';
+        } else if (symptoms.includes('4') && symptoms.includes('5') && symptoms.includes('6') && symptoms.includes('9') && symptoms.includes('10')) {
+            diagnosis = 'You might have Severe Gastroenteritis';
+            medication = 'Avoid solid foods, drink clear fluids, and seek medical attention.';
+        } else if (symptoms.includes('11') && symptoms.includes('12') && symptoms.includes('13') && symptoms.includes('14') && symptoms.includes('15')) {
+            diagnosis = 'You might have HIV/AIDS';
+            medication = 'Consult a doctor immediately.';
+        } else if (symptoms.includes('16') && symptoms.includes('17') && symptoms.includes('18') && symptoms.includes('19') && symptoms.includes('20')) {
+            diagnosis = 'You might have Advanced Rheumatoid Arthritis';
+            medication = 'Take anti-inflammatory medications and consult a doctor for long-term management.';
+        } else if (symptoms.includes('21') && symptoms.includes('22') && symptoms.includes('23') && symptoms.includes('24') && symptoms.includes('25')) {
+            diagnosis = 'You might have Advanced Tuberculosis';
+            medication = 'Take prescribed antibiotics and consult a doctor.';
+        } else if (symptoms.includes('26') && symptoms.includes('27') && symptoms.includes('28') && symptoms.includes('1') && symptoms.includes('2')) {
+            diagnosis = 'Chronic Gastritis';
+            medication = 'Avoid spicy foods, take antacids, and consult a doctor.';
+        } else if (symptoms.includes('3') && symptoms.includes('6') && symptoms.includes('9') && symptoms.includes('12') && symptoms.includes('18')) {
+            diagnosis = 'You might have Allergic Reaction';
+            medication = 'Take antihistamines and avoid allergens.';
+        } else if (symptoms.includes('5') && symptoms.includes('7') && symptoms.includes('10') && symptoms.includes('15') && symptoms.includes('19')) {
+            diagnosis = 'You might have Influenza';
+            medication = 'Rest, drink plenty of fluids, and take antiviral medications if prescribed.';
+        } else if (symptoms.includes('8') && symptoms.includes('11') && symptoms.includes('14') && symptoms.includes('17') && symptoms.includes('22')) {
+            diagnosis = 'You might have Chronic Kidney Disease';
+            medication = 'Consult a nephrologist for a comprehensive treatment plan.';
+        } else if (symptoms.includes('13') && symptoms.includes('16') && symptoms.includes('20') && symptoms.includes('23') && symptoms.includes('26')) {
+            diagnosis = 'You might have Cancer';
+            medication = 'Consult an oncologist for a comprehensive treatment plan.';
+        }
+    }
+
+    // If no specific condition matches, default to unknown
+    if (diagnosis === '') {
+        diagnosis = 'As per my knowledge, I don\'t know this disease';
+        medication = 'Consult a doctor for further examination and treatment.';
+    }
+
+    console.log('Diagnosis:', diagnosis);
+    console.log('Medication:', medication);
+
+    document.getElementById('result').textContent = `Diagnosis: ${diagnosis}`;
+    document.getElementById('medication').textContent = `Medication: ${medication}`;
+}
+
+
+
+// Handle search on Enter key
+  document.getElementById('search-box').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const searchTerm = event.target.value;
+      alert(`Search term: ${searchTerm}`);
+    }
+  });
+
+  // Voice search functionality
+  const microphoneBtn = document.getElementById('microphone-btn');
+  const searchBox = document.getElementById('search-box');
+
+  microphoneBtn.addEventListener('click', () => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.addEventListener('result', (event) => {
+      const speechResult = event.results[0][0].transcript;
+      searchBox.value = speechResult;
+      alert(`Search term: ${speechResult}`);
+    });
+
+    recognition.addEventListener('error', (event) => {
+      alert('Error occurred in recognition: ' + event.error);
+    });
+  });
+
+</script>
+</body>
+</html>

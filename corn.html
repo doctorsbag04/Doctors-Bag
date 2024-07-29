@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>INJURIES</title>
+<head>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+  .then(registration => {
+    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  })
+  .catch(error => {
+    console.log('ServiceWorker registration failed: ', error);
+  });
+}
+</script>
+</head>
+
+<style>
+  @font-face {
+    font-family: 'Helvetica';
+    src: url('fonts/Helvetica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+   body {
+    font-family: 'Helvetica', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    color: #666;
+    font-size: 16px;
+    overflow-x: hidden;
+    
+  }
+
+  .top-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    top: 0;
+  }
+/* Custom vertical scrollbar styles */
+::-webkit-scrollbar {
+  width: 1px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar */
+  border-radius: 2px; /* Round the corners of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Track color */
+}
+
+  .top-container + .container {
+    margin-top: 80px;
+  }
+
+  .logo-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #logo {
+    width: 50px;
+    display: block;
+    margin-right: 10px;
+  }
+
+  #search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-right: auto;
+    width: 100%;
+    position: relative;
+  }
+
+   #search-box {
+    padding: 10px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 100%; /* Increased width of the search box */
+    font-size: 15px;
+    box-sizing: border-box;
+    background: #f7f7f7;
+    border: 2px solid transparent;
+  }
+
+  #microphone-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  #speak-btn {
+  padding: 0;
+  margin-left: 10px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+#speak-btn img {
+  width: 30px;
+  height: 30px;
+}
+
+  h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 40px;
+    color: #555;
+    margin-top: 90px;
+  }
+
+h2 {
+ margin-left: 40px;
+}
+
+  b {
+    display: block;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    color: #666;
+  }
+
+.last-paragraph {
+  margin-bottom: 100px;
+}
+
+  .headline-container {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .headline {
+    animation: scroll 10s linear infinite;
+    white-space: nowrap;
+  }
+
+  .headline span {
+    display: inline-block;
+    color: #ff0000;
+    padding-right: 100%;
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  p {
+    text-align: justify;
+    margin: 0 20px 20px 20px;
+    font-size: 1em;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .img {
+    display: block;
+    margin: 30px auto;
+    width: 70%;
+    max-width: 400px;
+  }
+
+  .container {
+    padding: 0 20px;
+    overflow-x: hidden;
+  }
+
+  .nav-links {
+    margin-left: 20px;
+  }
+
+  .nav-links img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  .slide {
+    display: none;
+  }
+
+  .active-slide {
+    display: block;
+  }
+
+  @media (max-width: 600px) {
+    body {
+      font-size: 14px;
+    }
+
+    .img {
+      width: 100%;
+    }
+  }
+
+  .nav-arrow {
+    position: fixed;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .nav-arrow img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .nav-arrow.left {
+    left: 10px;
+  }
+
+  .nav-arrow.right {
+    right: 10px;
+  }
+</style>
+</head>
+<body>
+<div class="top-container">
+  <div class="logo-header">
+    <img id="logo" src="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" alt="Logo">
+    <div id="search-container">
+     <input type="text" id="search-box" placeholder="Search Doctors Bag">
+      <button id="microphone-btn">
+        <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
+      </button>
+    </div>
+  <button id="speak-btn">
+  <img src="https://i.postimg.cc/43J6c8Tw/volume.png" alt="Speak" width="30" height="30">
+</button>
+    <div class="nav-links">
+      <a href="index.html">
+        <img src="https://i.postimg.cc/prtF7C9K/house-black-silhouette-without-door.png" alt="Home">
+      </a>
+    </div>
+  </div> 
+</div>
+
+<div class="container">
+  <header>
+    <div>
+      <h1>CORNS</h1>
+    </div>
+  </header>
+</div>
+
+
+<div class="slide active-slide">
+  <img src="https://i.postimg.cc/J4F9WbTB/images-77.jpg" class="img">
+   <p class="last-paragraph">Nowadays corns are major problem for every 3 persons out of 10 .people think it is permanent problem. But in this world every problem has a solution so for corns  also there is a simple effective treatment</p>
+  <b>HERE'S A STEP-BY-STEP GUIDE, PLEASE FOLLOW THESE STEPS</b>
+</div>
+
+<div class="slide">
+  <h1>STEP-1</h1>
+  <img src="https://i.postimg.cc/63Q03Pq6/images-79.jpg" class="img">
+  <b>PURCHESE BHOLA CORN PAINT </b>
+   <p class="last-paragraph">Buy a Bahola corn paint drops  form your near Ayurvedic medical store .</p>
+</div>
+
+<div class="slide">
+  <h1>STEP-2</h1>
+  <img src="https://i.postimg.cc/RhHbSYp6/Pics-Art-10-25-12-34-59.jpg" class="img">
+  <b>POUR ONE DROP EVERY MORNING AND NIGHT BEFORE GOING TO SLEEP.</b>
+   <p class="last-paragraph">Apply just one drop of corn paint daily, both morning and night, to effectively heal corns.</p>
+  </div>
+
+<div class="slide">
+  <h1>STEP-3</h1>
+  <img src="https://i.postimg.cc/RhHbSYp6/Pics-Art-10-25-12-34-59.jpg" class="img">
+  <b>USE THIS CORN PAINT UP TO 20-24 DAYS AND THEN STOP USING IT COMPLETELY</b>
+  <p class="last-paragraph">This corn paint is recommended to use up to 20-24 days, then ensure to discontinue its usage for optimal results.</p>
+</div>
+<div class="slide">
+  <h1>STEP-4</h1>
+  <img src="https://i.postimg.cc/FsQQfbb5/IMG-20240530-194107.jpg" class="img">
+  <b>CLEAN THE CORN EVERYDAY NIGHT WITH HOT WATER.</b>
+  <p class="last-paragraph">"Clean the corn every night with hot water to ensure the removel of impurities. This simple practice helps to heal the corn quickly .please note that the corns heal outer skin quickly but it take more time to heal internally "</p>
+</div>
+
+<div class="nav-arrow left" onclick="changeSlide(-1)">
+  <img src="https://i.postimg.cc/66c6YYRF/previous.png" alt="Left Arrow">
+</div>
+
+<div class="nav-arrow right" onclick="changeSlide(1)">
+  <img src="https://i.postimg.cc/CLpCsMGc/next.png" alt="Right Arrow">
+</div>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  let startX;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active-slide', i === index);
+    });
+  }
+
+  function changeSlide(direction) {
+    currentSlide += direction;
+    if (currentSlide < 0) {
+      currentSlide = slides.length - 1;
+    } else if (currentSlide >= slides.length) {
+      currentSlide = 0;
+    }
+    showSlide(currentSlide);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Define available pages
+    const availablePages = ['onlinemedicine.html', 'healthupdates.html', 'about.html', 'contact.html', 'injury.html', 'diagnosis.html', 'termsandconditions.html', 'bonefracture.html','home.html','corn.html','rinjuries.html','scarpionbite.html','scars.html','twisted.html'];
+
+    // Function to check if the page exists and redirect
+    const checkAndRedirect = (searchTerm) => {
+      const formattedSearchTerm = searchTerm.replace(/\s+/g, '').toLowerCase() + '.html';
+      if (availablePages.includes(formattedSearchTerm)) {
+        window.location.href = formattedSearchTerm;
+      } else {
+        alert('Page not found');
+      }
+    };
+
+    // Handle search on Enter key
+    document.getElementById('search-box').addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        const searchTerm = event.target.value;
+        checkAndRedirect(searchTerm);
+      }
+    });
+
+    // Voice search functionality
+    const microphoneBtn = document.getElementById('microphone-btn');
+    const searchBox = document.getElementById('search-box');
+
+    microphoneBtn.addEventListener('click', () => {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.start();
+
+      recognition.addEventListener('result', (event) => {
+        const speechResult = event.results[0][0].transcript;
+        searchBox.value = speechResult;
+        checkAndRedirect(speechResult);
+      });
+
+      recognition.addEventListener('error', (event) => {
+        alert('Error occurred in recognition: ' + event.error);
+      });
+    });
+
+    // Touch event handlers for slide navigation
+    document.body.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
+
+    document.body.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+      if (startX > endX + 50) {
+        changeSlide(1); // swipe left
+      } else if (startX < endX - 50) {
+        changeSlide(-1); // swipe right
+      }
+    });
+  });
+
+  // JavaScript to update headline text
+  const headlines = [
+    "Please note that this treatment is for instant medication to stop damages. If you have major injuries consult a certified doctor."
+  ];
+
+  let currentIndex = 0;
+  const headlineElement = document.querySelector('.headline span');
+
+  function updateHeadline() {
+    headlineElement.textContent = headlines[currentIndex];
+    currentIndex = (currentIndex + 1) % headlines.length;
+  }
+
+  // Update headline every 1 second
+  setInterval(updateHeadline, 1000);
+
+  // Initialize slide visibility
+  showSlide(currentSlide);
+</script>
+<!-- Text-to-Speech Functionality -->
+<script>
+  const speakButton = document.getElementById('speak-btn');
+
+  speakButton.addEventListener('click', () => {
+    const currentSlideContent = document.querySelector('.active-slide').innerText;
+    const speech = new SpeechSynthesisUtterance(currentSlideContent);
+    speech.lang = 'en-US';
+    window.speechSynthesis.speak(speech);
+  });
+</script>
+
+</body>
+</html>

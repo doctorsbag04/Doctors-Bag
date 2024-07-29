@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<head>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+  .then(registration => {
+    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  })
+  .catch(error => {
+    console.log('ServiceWorker registration failed: ', error);
+  });
+}
+</script>
+</head>
+
+<style>
+ @font-face {
+    font-family: 'Helvetica';
+    src: url('fonts/Helvetica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+    body {
+    font-family: 'Helvetica', sans-serif;
+    margin: 0;
+    padding: 0;
+        background-color: #fff;
+    color: #000;
+    font-size: 26px;
+    text-align: center;
+  }
+  
+  .container {
+    max-width: 100%;
+   
+  }
+
+  .top-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+
+  .top-container {
+    top: 0;
+  }
+
+  .logo-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #logo {
+    width: 50px;
+    display: block;
+    margin-right: 10px;
+  }
+
+  #search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-right: auto;
+    width: 100%;
+    position: relative;
+  }
+
+    #search-box {
+    padding: 10px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 100%; /* Increased width of the search box */
+    font-size: 15px;
+    box-sizing: border-box;
+    background: #f7f7f7;
+    border: 2px solid transparent;
+  }
+
+  #microphone-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+ 
+  .about-section {
+    padding: 20px;
+    background-color: #fff;
+  }
+
+  .about-section h1 {
+    text-align: center;
+    font-size: 48px;
+    margin-bottom: 30px;
+     margin-top: 90px;
+    color: #333;
+  }
+
+  .about-section p {
+    font-size: 20px;
+    line-height: 1.6;
+    color: #000;
+    text-align: justify;
+  }
+
+  .about-section .highlight {
+    font-weight: bold;
+    color: #2dd6c0; /* Changed color to #2dd6c0 */
+    text-decoration: none; /* Removed underline */
+  }
+
+  .about-section p1 {
+    font-size: 15px;
+    color: #666;
+  }
+
+  footer p {
+    margin: 20px 0;
+    margin-top: 80px;
+
+  }
+   .nav-links {
+    margin-left: 20px;
+  }
+
+  .nav-links img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    body {
+      font-size: 18px;
+    }
+
+    .about-section h1 {
+      font-size: 32px;
+    }
+
+    .about-section p {
+      font-size: 16px;
+    }
+
+    #search-container {
+      justify-content: center;
+    }
+
+    #search-box {
+      max-width: 600px;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="top-container">
+  <div class="logo-header">
+    <img id="logo" src="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" alt="Logo">
+    <div id="search-container">
+      <input type="text" id="search-box" placeholder="Search Doctors Bag">
+      <button id="microphone-btn">
+        <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
+      </button>
+    </div>
+    </div> 
+</div>
+
+<div class="container">
+  <div class="about-section">
+<h1> ABOUT</h1>
+
+       <p>
+      This app was invented by <span class="highlight"><a href="https://www.linkedin.com/in/shaiksadik" style="color: #2dd6c0;">Shaik Sadik</a></span>, with the mission to empower individuals to handle medical emergencies at toughest places and situations where no doctor avaliable and lookafter everyday health concerns.
+    </p>
+    <p>
+      <span class="highlight">Doctor's Bag</span> is an innovative online treatment application designed to provide treatment methods that can be performed without a doctor's help .The treatment process in this app  is only for small treatment scenarios . This app is a valuable resource, especially in emergency situations, where immediate medical guidance is crucial.
+    </p>
+    <p>
+      Many people lack even in the basic knowledge about proper medication and first aid, which can be critical in times of need. Doctor's Bag bridges this gap by offering  accessible medical advice at your fingertips. Whether you are dealing with an injury, an animal bite, a skin infection, or other health issues, Doctor's Bag provides step-by-step instructions to manage these conditions effectively until professional medical help is available.this app also offers Digital diagnosis which is helpful people who even doesn't the knowledge to detect the general health issues using the symptoms. this app also provides the heart rate monitoring which is connected to the smart watches 
+    </p>
+    <p>
+      <a href="https://www.investindia.gov.in/atmanirbhar-bharat-abhiyaan" style="color: #2dd6c0;"> #Atmanirbhar Bharat </a>
+    </p>
+    <p1>Version :1.0.0.0.0</p1>
+    <footer><p> © All Rights Are Reserved </p></footer>
+  </div>
+</div>
+ <head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2538051649617281"
+     crossorigin="anonymous"></script>
+</head>
+
+</body>
+<script>
+// Handle search on Enter key
+  document.getElementById('search-box').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const searchTerm = event.target.value;
+      alert(`Search term: ${searchTerm}`);
+    }
+  });
+
+  // Voice search functionality
+  const microphoneBtn = document.getElementById('microphone-btn');
+  const searchBox = document.getElementById('search-box');
+
+  microphoneBtn.addEventListener('click', () => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.addEventListener('result', (event) => {
+      const speechResult = event.results[0][0].transcript;
+      searchBox.value = speechResult;
+      alert(`Search term: ${speechResult}`);
+    });
+
+    recognition.addEventListener('error', (event) => {
+      alert('Error occurred in recognition: ' + event.error);
+    });
+  });
+</script>
+</html>

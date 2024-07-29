@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="Utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DOCTORS BAG</title>
+<head>
+    <link rel="icon" href="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" type="image/png">
+    <link rel="shortcut icon" href="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" type="image/png">
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+  .then(registration => {
+    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  })
+  .catch(error => {
+    console.log('ServiceWorker registration failed: ', error);
+  });
+}
+</script>
+  </head>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  color: #000;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.top-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #fff;
+  width: 100%;
+  z-index: 1001; /* Higher z-index */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  position: relative; /* Ensure it is above nav */
+}
+
+.bottom-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #fff;
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+  z-index: 1003;
+  box-sizing: border-box;
+  margin: 0;
+  left: 0;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+#logo {
+  width: 50px;
+  display: block;
+  margin-right: 10px;
+}
+
+#menu-btn, #menu-btn-bottom {
+  display: block;
+  font-size: 24px;
+  cursor: pointer;
+  
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+nav {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+   background:#fff;
+   padding-top: 70px; /* Adjusted to account for the top-container */
+  z-index: 1000;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  padding: 15px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+nav ul li a i {
+  margin-right: 10px; /* Space between icon and text */
+}
+
+#search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  margin-right: auto;
+  width: 100%;
+  position: relative;
+}
+
+#search-box {
+  padding: 10px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 100%;
+  font-size: 15px;
+  box-sizing: border-box;
+  background: #f7f7f7;
+  border: 2px solid transparent;
+}
+
+#microphone-btn {
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-color: #000;
+
+}
+#diagnosis-btn-bottom, #map-btn-bottom {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 80px; /* Adjust width as needed */
+  margin-right: 20px;
+  margin-bottom: -1px; /* Move 2 pixels up */
+   border: none;
+  height: 30px; /* Adjust height as needed */
+  cursor: pointer;
+}
+
+.bottom-container {
+  display: flex;
+  align-items: center;
+}
+
+.bottom-container {
+  display: flex;
+  align-items: center;
+}
+
+
+.button-container {
+  display: flex;
+  
+  flex-wrap: wrap;
+  align-items: center;
+   margin-top: 70px;
+}
+
+.button {
+  margin: 20px;
+   font-size: 24px;
+   height: 70px;
+  width: 400px;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+
+.button p {
+  margin: 0;
+}
+
+.carousel-container {
+  position: relative;
+  max-width: 100%;
+  margin: 20px auto;
+  overflow: hidden;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.carousel-images {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-images img {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+footer p3 {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin: 20px 0;
+}
+
+footer {
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+}
+
+#connect:hover {
+  transform: scale(1.2);
+}
+
+#connect {
+  width: 70px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  }
+
+#bluetooth-icon {
+  width: 30px;
+  height: 30px;
+}
+
+#pulse {
+  margin-bottom: 50px;
+}
+
+#condition {
+  font-weight: bold;
+}
+nav ul li a img {
+  width: 24px; /* Adjust the size as needed */
+  height: 24px; /* Adjust the size as needed */
+  margin-right: 10px; /* Space between the image and text */
+  vertical-align: middle; /* Align the image with the text */
+}
+
+
+@media (min-width: 768px) {
+  nav {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+      padding-top: 0;
+    position: relative; /* Change position to relative */
+    z-index: 999; /* Lower than top-container */
+  }
+ nav ul li a img {
+    display: none;
+  }
+  nav ul {
+    display: flex;
+    flex-direction: row;
+  }
+
+  nav ul li {
+    padding: 0 20px;
+    border: none;
+  }
+
+  nav ul li a {
+    color: #000;
+  }
+
+
+  #menu-btn, #menu-btn-bottom {
+    display: none;
+  }
+
+  #search-container {
+    justify-content: center;
+  }
+
+  #search-box {
+    max-width: 600px;
+  }
+
+  #search-btn {
+    margin-left: 5px;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="top-container">
+  <div class="logo-header">
+    
+<img id="logo" src="https://i.postimg.cc/ryxRvb54/no-image-available-icon-6.png" alt="Logo"></a>
+    <div id="search-container">
+      <input type="text" id="search-box" placeholder="Search">
+      <button id="microphone-btn">
+       Mic      </button>
+    </div>
+  </div> 
+</div>
+
+<div class="container">
+  <header>
+   <nav id="nav-menu">
+  <ul>
+    <li><a href="onlinemedicine.html"><button> Online medicine</button></a></li>
+    <li><a href="contact.html"><button> Contact</button></a></li>
+    <li><a href="about.html"><button> About</button></a></li>
+  </ul>
+</nav>
+
+  </header>
+  <div>
+    <button id="connect">
+       Connect    </button>
+    <p>Heart Rate: <span id="pulse">00</span> bpm</p>
+    <p>Condition: <span id="condition">Normal Heart Rate</span></p>
+  </div>
+ 
+  <div class="carousel-container">
+    <div class="carousel-images" id="carousel-images">
+      <img src="https://i.postimg.cc/ryxRvb54/no-image-available-icon-6.png" alt="photoone">
+      <img src="https://i.postimg.cc/ryxRvb54/no-image-available-icon-6.png" alt="phototwo">
+      <img src=https://i.postimg.cc/ryxRvb54/no-image-available-icon-6.png" alt="photothree">
+      <img src="https://i.postimg.cc/ryxRvb54/no-image-available-icon-6.png" alt="photofour">
+      <img src="https://i.postimg.cc/ryxRvb54/no-image-available-icon-6.png" alt="photofive">
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button class="button">
+      <a href="injury.html">
+      <p>Injuries</p>
+      </a>
+    </button>
+    <button class="button">
+      <a href="animalbites.html">
+            <p>Animal Bites</p>
+      </a>
+    </button>
+    <button class="button">
+      <a href="skinproblems.html">
+         <p>Skin Problems</p>
+      </a>
+    </button>
+    <button class="button">
+      <a href="healthproblems.html">
+               <p>Health Issues</p> </a>
+    </button>
+  </div>
+
+<div class="bottom-container">
+    <button id="menu-btn-bottom">&#9776;</button>
+    <button id="diagnosis-btn-bottom">
+        <a href="diagnosis.html">Diagnosis</a>   
+    </button>
+    <button id="map-btn-bottom">
+        <a href="map.html">  Nearby Hospital</a>
+           
+    </button>
+</div>
+<footer>
+  <p3>© All Rights Are Reserved</p3>
+  <a href="termsandconditions.html" class="footer">T&C</a>
+</footer>
+<script>
+ // Toggle navigation menu
+document.getElementById('menu-btn-bottom').addEventListener('click', function(event) {
+  event.stopPropagation(); // Prevent the click event from propagating to the document
+  const navMenu = document.getElementById('nav-menu');
+  navMenu.style.display = navMenu.style.display === 'block' ? 'none' : 'block';
+});
+
+// Close the menu if clicking outside of it
+document.addEventListener('click', function(event) {
+  const navMenu = document.getElementById('nav-menu');
+  const menuBtn = document.getElementById('menu-btn-bottom');
+  if (navMenu.style.display === 'block' && !navMenu.contains(event.target) && event.target !== menuBtn) {
+    navMenu.style.display = 'none';
+  }
+});
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+  // Define available pages
+  const availablePages = ['onlinemedicine.html', 'healthupdates.html', 'about.html', 'contact.html', 'injury.html', 'diagnosis.html', 'termsandconditions.html', 'bonefracture.html','home.html','corn.html','rinjuries.html','scarpionbite.html','scars.html','twisted.html'];
+
+  // Function to check if the page exists and redirect
+  const checkAndRedirect = (searchTerm) => {
+    const formattedSearchTerm = searchTerm.replace(/\s+/g, '').toLowerCase() + '.html';
+    if (availablePages.includes(formattedSearchTerm)) {
+      window.location.href = formattedSearchTerm;
+    } else {
+      alert('Page not found');
+    }
+  };
+
+  // Handle search on Enter key
+  document.getElementById('search-box').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const searchTerm = event.target.value;
+      checkAndRedirect(searchTerm);
+    }
+  });
+
+  // Voice search functionality
+  const microphoneBtn = document.getElementById('microphone-btn');
+  const searchBox = document.getElementById('search-box');
+
+  microphoneBtn.addEventListener('click', () => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.addEventListener('result', (event) => {
+      const speechResult = event.results[0][0].transcript;
+      searchBox.value = speechResult;
+      checkAndRedirect(speechResult);
+    });
+
+    recognition.addEventListener('error', (event) => {
+      alert('Error occurred in recognition: ' + event.error);
+    });
+  });
+});
+
+
+  // Carousel functionality
+  let currentIndex = 0;
+  const images = document.getElementById('carousel-images').children;
+  const totalImages = images.length;
+
+  function showNextImage() {
+    images[currentIndex].style.display = 'none';
+    currentIndex = (currentIndex + 1) % totalImages;
+    images[currentIndex].style.display = 'block';
+  }
+
+  setInterval(showNextImage, 10000); // Change image every 10 seconds
+
+  // Initially hide all images except the first one
+  for (let i = 1; i < totalImages; i++) {
+    images[i].style.display = 'none';
+  }
+
+  
+document.addEventListener('DOMContentLoaded', async () => {
+  // Retrieve the stored pulse value and display it
+  const storedPulse = localStorage.getItem('pulse');
+  if (storedPulse !== null) {
+    updateHeartRateDisplay(storedPulse);
+  }
+
+  // Retrieve the saved device ID from localStorage
+  const savedDeviceId = localStorage.getItem('bluetoothDeviceId');
+
+  // Function to handle characteristic value changes
+  const handleCharacteristicValueChanged = (event) => {
+    const value = event.target.value;
+    const pulse = value.getUint8(1);
+    updateHeartRateDisplay(pulse);
+
+    // Store the pulse value in localStorage
+    localStorage.setItem('pulse', pulse);
+  };
+
+  const connectToDevice = async (device) => {
+    const server = await device.gatt.connect();
+    const service = await server.getPrimaryService('heart_rate');
+    const characteristic = await service.getCharacteristic('heart_rate_measurement');
+
+    // Add event listener for characteristic value changes
+    characteristic.addEventListener('characteristicvaluechanged', handleCharacteristicValueChanged);
+    
+    // Start notifications
+    await characteristic.startNotifications();
+
+    return device;
+  };
+
+  if (savedDeviceId) {
+    try {
+      // Attempt to reconnect to the saved device
+      const device = await navigator.bluetooth.requestDevice({
+        filters: [{ services: ['heart_rate'] }],
+        optionalServices: ['heart_rate']
+      });
+      if (device.id === savedDeviceId) {
+        await connectToDevice(device);
+      }
+    } catch (error) {
+      console.error('Reconnection error:', error);
+    }
+  }
+
+  // Event listener for the connect button
+  document.getElementById('connect').addEventListener('click', async () => {
+    try {
+      const device = await navigator.bluetooth.requestDevice({
+        filters: [{ services: ['heart_rate'] }]
+      });
+
+      // Connect to the device and handle the characteristic
+      await connectToDevice(device);
+
+      // Store the device ID in localStorage
+      localStorage.setItem('bluetoothDeviceId', device.id);
+
+      device.addEventListener('gattserverdisconnected', () => {
+        localStorage.removeItem('bluetoothDeviceId');
+        console.log('Device disconnected');
+      });
+
+    } catch (error) {
+      console.error('Connection error:', error);
+    }
+  });
+});
+
+function updateHeartRateDisplay(pulse) {
+  const pulseElement = document.getElementById('pulse');
+  pulseElement.textContent = pulse;
+
+  // Display the condition based on heart rate
+  const conditionElement = document.getElementById('condition');
+  if (pulse < 60) {
+    conditionElement.textContent = 'Low Heart Rate (Bradycardia)';
+  } else if (pulse >= 60 && pulse <= 100) {
+    conditionElement.textContent = 'Normal Heart Rate';
+  } else {
+    conditionElement.textContent = 'High Heart Rate (Tachycardia)';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const button = document.getElementById('logo');
+
+    let clickTimeout;
+
+    button.addEventListener('click', function() {
+        clearTimeout(clickTimeout);
+        clickTimeout = setTimeout(function() {
+            // Single click action
+            window.location.href = 'about.html';
+        }, 200);
+    });
+
+    button.addEventListener('dblclick', function() {
+        clearTimeout(clickTimeout);
+        // Double click action
+        window.location.href = 'index.html';
+    });
+});
+
+  </script>
+
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONLINE MEDICINE </title>
+    <style>
+          @font-face {
+    font-family: 'Helvetica';
+    src: url('fonts/Helvetica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+      body {
+            font-family: 'Helvetica', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+
+ .container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .top-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: #fff;
+    position: fixed;
+    width: 100%;
+    z-index: 1001;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+  }
+.top-container {
+    top: 0;
+  }
+.logo-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #logo {
+    width: 50px;
+    display: block;
+    margin-right: 10px;
+  }
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 10px;
+    margin-top: 70px; /* Adjusted for fixed top-container */
+  }
+
+  #search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Added to center microphone icon vertically */
+    margin-top: 0;
+    margin-right: auto;
+    width: 100%;
+    position: relative; /* Added to position microphone button inside the search box */
+  }
+/* Custom vertical scrollbar styles */
+::-webkit-scrollbar {
+  width: 1px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar */
+  border-radius: 2px; /* Round the corners of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Track color */
+}
+
+   #search-box {
+    padding: 10px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 100%; /* Increased width of the search box */
+    font-size: 15px;
+    box-sizing: border-box;
+    background: #f7f7f7;
+    border: 2px solid transparent;
+  }
+
+  #microphone-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+
+
+
+        main {
+            padding: 20px;
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .product {
+            background-color:  #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 350px; /* Adjusted width */
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            margin: 10px;
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        .product h2 {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .product p {
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .product a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2dd6c0;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .product a:hover {
+            background-color: #333;
+        }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 600px) {
+            .product {
+                width: 350px;
+            }
+
+    #search-container {
+      justify-content: center;
+    }
+
+    #search-box {
+      max-width: 600px; /* Adjusted for larger screens */
+    }
+
+        }
+    </style>
+</head>
+<body>
+<div class="top-container">
+  <div class="logo-header">
+    <img id="logo" src="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" alt="Logo">
+    <div id="search-container">
+   <input type="text" id="search-box" placeholder="Search Doctors Bag">
+      <button id="microphone-btn">
+        <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
+      </button>
+    </div>
+  </div> 
+</div>
+<div class="container">
+  <header>
+    <div>
+      <h1>ONLINE MEDICINE</h1>
+    </div>
+  </header>
+</div>
+    <main>
+        <div class="product-list" id="product-list"></div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const productList = document.getElementById('product-list');
+
+    const products = [
+        { id: 1, name: 'Medica Roll Bandage (7.5 cm-3 mtr)', description: 'Medicare Hygiene Limited', price: '₹21.00', image: 'https://i.postimg.cc/CKFg4Htq/medica-roll-bandage-7-5-cm-3-mtr-406423-0-0.png', link: 'https://www.netmeds.com/non-prescriptions/medica-roll-bandage-7-5-cm-3-mtr' },
+
+
+        {id: 2, name: 'Mederma Advanced Plus Scar Gel 5gm', description: 'Allantoin is used as a moisturizing agent and skin protectant and helps to soften the skin.', price: '₹238.50', image: 'https://i.postimg.cc/65Xt3X0c/mederma-advanced-plus-scar-gel-5gm-117031-0-1.png', link: 'https://www.netmeds.com/prescriptions/mederma-advanced-plus-scar-gel-5gm' },
+
+
+        { id: 3, name: 'Bahola Corn Paint Liquid 10 ml', description: 'Bahola Labs', price: '₹72.25 ', image: 'https://i.postimg.cc/59wWDrVC/bahola-corn-paint-liquid-10-ml-0-0.png', link: 'https://www.netmeds.com/non-prescriptions/bahola-corn-paint-liquid-10-ml' },
+
+
+        { id: 4, name: 'Betadine 10% Solution 100ml', description: 'Betadine 10% Solution is an anti-septic solution used in skin prior to surgery and to reduce bacteria on the skin', price: ' ₹107.52', image: 'https://i.postimg.cc/nzFqZ5Wh/betadine-10-solution-100ml-46929-0-1.png', link: 'https://www.netmeds.com/prescriptions/betadine-10-solution-100ml' },
+
+
+        { id: 5, name: 'Ecosprin 75 Tablet 14S', description: 'Ecosprin 75 Tablet contains Aspirin, which belongs to the group of medicines called Antiplatelet agents', price: '₹5.49', image: 'https://i.postimg.cc/dVzKbcLG/ecosprin-75-tablet-14s-34914-0-3.png', link: 'https://www.netmeds.com/prescriptions/ecosprin-75mg-tablet-14-s' },
+
+        // Add more products as needed up to 100
+    ];
+
+    products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'product';
+        productDiv.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h2>${product.name}</h2>
+            <p>${product.description}</p>
+            <p>${product.price}</p>
+            <a href="${product.link}">Buy Now</a>
+        `;
+        productList.appendChild(productDiv);
+    });
+});
+
+
+ document.addEventListener('DOMContentLoaded', () => {
+  // Define available pages
+  const availablePages = ['onlinemedicine.html', 'healthupdates.html', 'about.html', 'contact.html', 'injury.html', 'diagnosis.html', 'termsandconditions.html', 'bonefracture.html','home.html','corn.html','rinjuries.html','scarpionbite.html','scars.html','twisted.html'];
+
+  // Function to check if the page exists and redirect
+  const checkAndRedirect = (searchTerm) => {
+    const formattedSearchTerm = searchTerm.replace(/\s+/g, '').toLowerCase() + '.html';
+    if (availablePages.includes(formattedSearchTerm)) {
+      window.location.href = formattedSearchTerm;
+    } else {
+      alert('Page not found');
+    }
+  };
+
+  // Handle search on Enter key
+  document.getElementById('search-box').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const searchTerm = event.target.value;
+      checkAndRedirect(searchTerm);
+    }
+  });
+
+  // Voice search functionality
+  const microphoneBtn = document.getElementById('microphone-btn');
+  const searchBox = document.getElementById('search-box');
+
+  microphoneBtn.addEventListener('click', () => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.addEventListener('result', (event) => {
+      const speechResult = event.results[0][0].transcript;
+      searchBox.value = speechResult;
+      checkAndRedirect(speechResult);
+    });
+
+    recognition.addEventListener('error', (event) => {
+      alert('Error occurred in recognition: ' + event.error);
+    });
+  });
+});
+s
+
+
+    </script>
+</body>
+</html>

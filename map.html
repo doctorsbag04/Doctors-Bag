@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MAP FOR NEARBY HOSPITALS</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<head>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+  .then(registration => {
+    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  })
+  .catch(error => {
+    console.log('ServiceWorker registration failed: ', error);
+  });
+}
+</script>
+</head>
+
+    <style>
+  @font-face {
+    font-family: 'Helvetica';
+    src: url('fonts/Helvetica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+        body, html {
+            font-family: 'Helvetica', sans-serif;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+
+                   }
+        #map {
+            height: calc(100% - 180px); /* Adjust height for top container and button container */
+            width: 100%;
+        }
+        #infoContainer {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 300px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            box-sizing: border-box;
+            z-index: 1000;
+            border-radius: 8px; 
+        }
+
+        #routeInfo {
+            text-align: center;
+            margin: 0;
+        }
+        .top-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #fff;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+        .logo-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+        }
+/* Custom vertical scrollbar styles */
+::-webkit-scrollbar {
+  width: 1px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar */
+  border-radius: 2px; /* Round the corners of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Track color */
+}
+
+
+        #logo {
+            width: 50px;
+            display: block;
+            margin-right: 10px;
+        }
+
+        #search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0;
+            margin-right: auto;
+            width: 100%;
+            position: relative;
+        }
+
+        #search-box {
+            padding: 10px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 100%;
+            font-size: 15px;
+            box-sizing: border-box;
+            background: #f7f7f7;
+            border: 2px solid transparent;
+        }
+
+        #microphone-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        #buttonContainer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        #showRouteBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 20px;
+            background-color: #2dd6c0;
+            color: white;
+            cursor: pointer;
+            width: 200px;
+        }
+        #showRouteBtn:hover {
+            background-color: #777;
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 600px) {
+            /* Adjustments for small screens */
+            #map {
+                height: calc(100% - 250px);
+            }
+            #infoContainer {
+                bottom: 100px;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            /* Adjustments for extra small screens */
+            #search-box {
+                width: calc(100% - 30px);
+            }
+            #microphone-btn {
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-container">
+        <div class="logo-header">
+            <img id="logo" src="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" alt="Logo">
+            <div id="search-container">
+                 <input type="text" id="search-box" placeholder="Search Doctors Bag">
+                                <button id="microphone-btn">
+                    <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+    <div id="infoContainer">
+        <div id="routeInfo">Finding your location...</div>
+    </div>
+    <div id="buttonContainer">
+        <button id="showRouteBtn" disabled>Show Route</button>
+    </div>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2538051649617281" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        let map = L.map('map').setView([51.505, -0.09], 10);
+        let userLocation;
+        let nearestHospital;
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        // Get user's current location
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                userLocation = [position.coords.latitude, position.coords.longitude];
+                map.setView(userLocation, 12);
+                L.marker(userLocation).addTo(map)
+                    .bindPopup('You are here')
+                    .openPopup();
+
+                findNearestHospital(userLocation);
+            }, error => {
+                alert('Error getting your location: ' + error.message);
+                document.getElementById('routeInfo').textContent = 'Error getting your location';
+            });
+        } else {
+            alert('Geolocation is not supported by this browser.');
+            document.getElementById('routeInfo').textContent = 'Geolocation is not supported by this browser.';
+        }
+
+        // Function to find nearest hospital using Overpass API
+        function findNearestHospital(userLocation) {
+            const overpassUrl = `https://overpass-api.de/api/interpreter?data=[out:json];node["amenity"="hospital"](around:100000,${userLocation[0]},${userLocation[1]});out;`;
+            fetch(overpassUrl)
+                .then(response => response.json())
+                .then(data => {
+                    let shortestDistance = Infinity;
+
+                    data.elements.forEach(hospital => {
+                        const hospitalLocation = [hospital.lat, hospital.lon];
+                        const distance = calculateDistance(userLocation, hospitalLocation);
+
+                        if (distance < shortestDistance) {
+                            shortestDistance = distance;
+                            nearestHospital = hospital;
+                        }
+                    });
+
+                    if (nearestHospital) {
+                        const hospitalLocation = [nearestHospital.lat, nearestHospital.lon];
+                        const hospitalName = nearestHospital.tags.name || "Hospital";
+
+                        L.marker(hospitalLocation).addTo(map)
+                            .bindPopup(hospitalName);
+
+                        document.getElementById('showRouteBtn').disabled = false;
+
+                        document.getElementById('showRouteBtn').addEventListener('click', () => {
+                            calculateAndDisplayRoute(userLocation, hospitalLocation, hospitalName);
+                        });
+
+                        document.getElementById('routeInfo').textContent = 'Nearest hospital located. Click "Show Route" to see the route.';
+                    } else {
+                        document.getElementById('routeInfo').textContent = 'No hospitals found nearby.';
+                    }
+                })
+                .catch(error => {
+                    alert('Error fetching hospital data: ' + error.message);
+                    document.getElementById('routeInfo').textContent = 'Error fetching hospital data.';
+                });
+        }
+
+        // Function to calculate distance between two points
+        function calculateDistance(point1, point2) {
+            const [lat1, lon1] = point1;
+            const [lat2, lon2] = point2;
+
+            const R = 6371e3; // metres
+            const φ1 = lat1 * Math.PI / 180; // φ, λ in radians
+            const φ2 = lat2 * Math.PI / 180;
+            const Δφ = (lat2 - lat1) * Math.PI / 180;
+            const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+            const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+                    Math.cos(φ1) * Math.cos(φ2) *
+                    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            const d = R * c; // in metres
+            return d;
+        }
+
+        // Function to calculate and display route using OpenRouteService API
+        function calculateAndDisplayRoute(userLocation, hospitalLocation, hospitalName) {
+            const apiKey = '5b3ce3597851110001cf6248802d762cdfe74eb3959e04f7b89946f5'; // Replace with your OpenRouteService API key
+            const url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${userLocation[1]},${userLocation[0]}&end=${hospitalLocation[1]},${hospitalLocation[0]}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const route = data.features[0].properties.segments[0];
+                    const distance = route.distance / 1000; // Convert to kilometers
+                    const duration = route.duration / 60; // Convert to minutes
+
+                    document.getElementById('routeInfo').innerHTML = `
+                        <p><strong>Hospital:</strong> ${hospitalName}<br>
+                        <strong>Distance:</strong> ${distance.toFixed(2)} km<br>
+                        <strong>Duration:</strong> ${duration.toFixed(2)} min</p>
+                    `;
+
+                    const coords = data.features[0].geometry.coordinates;
+                    const latlngs = coords.map(coord => [coord[1], coord[0]]);
+
+                    const polyline = L.polyline(latlngs, { color: 'blue' }).addTo(map);
+                    map.fitBounds(polyline.getBounds());
+
+                    // Pan the map to the start of the route (user's location)
+                    map.panTo(new L.LatLng(userLocation[0], userLocation[1]));
+                })
+                .catch(error => {
+                    alert('Error fetching route data: ' + error.message);
+                    document.getElementById('routeInfo').textContent = 'Error fetching route data.';
+                });
+        }
+    </script>
+</body>
+</html>
