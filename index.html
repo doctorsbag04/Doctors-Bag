@@ -4,6 +4,7 @@
 <meta charset="Utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>DOCTORS BAG</title>
+<head>
     <link rel="icon" href="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" type="image/png">
     <link rel="shortcut icon" href="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" type="image/png">
 <script>
@@ -19,41 +20,47 @@ if ('serviceWorker' in navigator) {
 </script>
   </head>
 <style>
-  @font-face {
-    font-family: 'Helvetica';
-    src: url('fonts/Helvetica.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-   body {
-  font-family: 'Helvetica', sans-serif;
+body {
   margin: 0;
   padding: 0;
+  font-family: Arial, sans-serif;
   background: #fff;
   color: #000;
   overflow-x: hidden;
 }
 
 .container {
-   max-width: 100%;
+  width: 100%;
   margin: 0 auto;
   padding: 20px;
   box-sizing: border-box;
 }
+/* Custom vertical scrollbar styles */
+::-webkit-scrollbar {
+  width: 1px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar */
+  border-radius: 2px; /* Round the corners of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Track color */
+}
+
 
 .top-container {
- display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    background-color: #fff;
-    position: fixed;
-    width: 100%;
-    z-index: 1001;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #fff;
+  width: 100%;
+  z-index: 1001; /* Higher z-index */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  position: relative; /* Ensure it is above nav */
 }
 
 .bottom-container {
@@ -70,19 +77,6 @@ if ('serviceWorker' in navigator) {
   margin: 0;
   left: 0;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-}
-/* Custom vertical scrollbar styles */
-::-webkit-scrollbar {
-  width: 1px; /* Width of the scrollbar */
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar */
-  border-radius: 2px; /* Round the corners of the scrollbar */
-}
-
-::-webkit-scrollbar-track {
-  background-color: transparent; /* Track color */
 }
 
 .logo-header {
@@ -135,12 +129,6 @@ nav ul li {
   padding: 15px;
 }
 
-.cat{
- color: #000;
- margin-top: 30px;
-
-}
-
 nav ul li a {
   color: #fff;
   text-decoration: none;
@@ -154,25 +142,24 @@ nav ul li a i {
 }
 
 #search-container {
-   display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0;
-    margin-right: auto;
-    width: 100%;
-    position: relative;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  margin-right: auto;
+  width: 100%;
+  position: relative;
 }
 
 #search-box {
-   padding: 10px;
-    border-radius: 20px;
-    width: 350px;
-    font-size: 15px;
-    box-sizing: border-box;
-    background: #f7f7f7;
-    border: 2px solid transparent;
-
+  padding: 10px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 100%;
+  font-size: 15px;
+  box-sizing: border-box;
+  background: #f7f7f7;
+  border: 2px solid transparent;
 }
 
 #microphone-btn {
@@ -232,7 +219,7 @@ nav ul li a i {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 70px;
 }
 
 .button {
@@ -264,8 +251,6 @@ nav ul li a i {
   overflow: hidden;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
   z-index: 1;
-   margin-bottom: 30px;
-
 }
 
 .carousel-images {
@@ -339,15 +324,51 @@ nav ul li:hover a img {
 }
 
 @media (min-width: 768px) {
-  
+  nav {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    background: transparent; /* Remove gradient background */
+    padding-top: 0;
+    position: relative; /* Change position to relative */
+    z-index: 999; /* Lower than top-container */
+  }
+ nav ul li a img {
+    display: none;
+  }
+  nav ul {
+    display: flex;
+    flex-direction: row;
+  }
+
+  nav ul li {
+    padding: 0 20px;
+    border: none;
+  }
+
+  nav ul li a {
+    color: #000;
+  }
+
+  nav ul li:hover {
+    background-color: transparent;
+  }
+
+  #menu-btn, #menu-btn-bottom {
+    display: none;
+  }
 
   #search-container {
     justify-content: center;
-    width: 100%;
   }
 
   #search-box {
-    width: 1400px;
+    max-width: 600px;
+  }
+
+  #search-btn {
+    margin-left: 5px;
   }
 }
 
@@ -359,7 +380,7 @@ nav ul li:hover a img {
   <div class="logo-header">
      <img id="logo" src="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" alt="Logo"></a>
     <div id="search-container">
-      <input type="text" id="search-box" placeholder="Search Doctors Bag">
+      <input type="text" id="search-box" placeholder="Search">
       <button id="microphone-btn">
         <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
       </button>
@@ -374,8 +395,7 @@ nav ul li:hover a img {
     <li><a href="onlinemedicine.html"><img src="https://i.postimg.cc/76yg5kYp/Picsart-24-06-03-16-54-44-251.png" alt="Icon 1"> Online medicine</a></li>
     <li><a href="contact.html"><img src="https://i.postimg.cc/VsWFbdt4/Picsart-24-06-03-16-54-55-386.png" alt="Icon 3"> Contact</a></li>
     <li><a href="about.html"><img src="https://i.postimg.cc/kG6h7CjL/Picsart-24-06-03-16-55-07-304.png" alt="Icon 2"> About</a></li>
-    <li><a href="contactslist.html">Doctors contacts</a></li>
-
+    <li><a href="contactslist.html"><img src="https://i.postimg.cc/cCnzwGYg/Picsart-24-07-29-11-57-25-498.png" alt="Icon 3">Doctors contacts</a></li>
   </ul>
 </nav>
 
@@ -397,7 +417,7 @@ nav ul li:hover a img {
       <img src="https://i.postimg.cc/65X01Crd/Picsart-24-06-03-18-16-38-507.jpg" alt="photofive">
     </div>
   </div>
-  <div class="cat"> <h3>Category</h3>  </div>
+
   <div class="button-container">
     <div class="button">
       <a href="injury.html">
@@ -426,7 +446,7 @@ nav ul li:hover a img {
   </div>
 
 <div class="bottom-container">
-      <div id="menu-btn-bottom">&#9776;</div>
+    <div id="menu-btn-bottom">&#9776;</div>
     <button id="diagnosis-btn-bottom">
         <a href="diagnosis.html">
             <img src="https://i.postimg.cc/L6nsX0Hd/Picsart-24-06-10-22-41-02-232.png" alt="Diagnosis">
