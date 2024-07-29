@@ -1,2 +1,5 @@
 # Doctors-Bag
+
 Doctor's Bag is an innovative online treatment application designed to provide treatment methods that can be performed without a doctor's help .The treatment process in this app is only for small treatment scenarios . This app is a valuable resource, especially in emergency situations, where immediate medical guidance is crucial.
+
+Many people lack even in the basic knowledge about proper medication and first aid, which can be critical in times of need. Doctor's Bag bridges this gap by offering accessible medical advice at your fingertips. Whether you are dealing with an injury, an animal bite, a skin infection, or other health issues, Doctor's Bag provides step-by-step instructions to manage these conditions effectively until professional medical help is available.this app also offers Digital diagnosis which is helpful people who even doesn't the knowledge to detect the general health issues using the symptoms. this app also provides the heart rate monitoring which is connected to the smart watches
