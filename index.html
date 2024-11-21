@@ -344,54 +344,9 @@ nav ul li:hover a img {
   transform: scale(1.1); /* Slightly enlarge the icon on hover */
 }
 
-.popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 1002; /* Adjust z-index to be below the carousel */
-}
 
-.popup-content {
-    background: #fff;
-    padding: 20px;
-	width: 300px;
-	height: 350px;
-    border-radius: 20px;
-    text-align: center;
-    position: relative;
-    z-index: 1003; /* Ensure popup content is above the overlay */
-	
 
-  
-}
-.popup-image {
-    width: 100px; /* Adjust width as needed */
-   
-}
 
-#accept-btn {
-    background-color: #2dd6c0;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-top: 20px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-#accept-btn:hover {
-    background-color: #777;
-}
 
 @media (min-width: 768px) {
   nav {
@@ -445,17 +400,6 @@ nav ul li:hover a img {
 </style>
 </head>
 <body>
-<div id="overlay"></div>
-<div id="popup" class="popup">
-    <div class="popup-content">
-        <img src="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" alt="Warning Image" class="popup-image">
-        <h2>Warning</h2>
-        <p>Please use this website only if any medical emergency occur when you are far from a hospital (Eg. Remote areas ,deserts,forests..).</p>
-        <button id="accept-btn">Accept</button>
-    </div>
-</div>
-
-
 
 <div class="top-container">
   <div class="logo-header">
@@ -742,20 +686,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'classic.html';
     });
 });
-document.addEventListener("DOMContentLoaded", function () {
-    const popup = document.getElementById("popup");
-    const overlay = document.getElementById("overlay");
-    const acceptButton = document.getElementById("accept-btn");
 
-    // Show popup and overlay on page load
-    popup.style.display = "flex";
-    overlay.style.display = "block";
-
-    // Hide popup and overlay when accept button is clicked
-    acceptButton.addEventListener("click", function () {
-        popup.style.display = "none";
-        overlay.style.display = "none";
-    });
 });
 
   </script>
