@@ -56,10 +56,18 @@ if ('serviceWorker' in navigator) {
         }
       });
 
-      // Redirect to login page
-      function goToLoginPage() {
-        window.location.href = "login.html";
-      }
+       function goToDashboardPage() {
+    window.location.href = "dashboard.html"; // Replace with the correct dashboard page path
+  }
+
+  // Handle Login Button Click
+  function handleLoginButtonClick() {
+    if (isLoggedIn) {
+      goToDashboardPage(); // If logged in, go to the dashboard
+    } else {
+      goToLoginPage(); // Otherwise, navigate to the login page
+    }
+  }
 
           function handleButtonClick(pageUrl) {
         if (isLoggedIn) {
@@ -322,10 +330,10 @@ nav ul li a i {
 
 #loginButton {
         position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         background-color: #ddd;
         background-size: cover;
@@ -477,8 +485,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button id="microphone-btn">
         <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
       </button>
-      <div id="loginButton" onclick="goToLoginPage()"></div>
-    </div>
+        </div>
+     <div id="loginButton" onclick="handleLoginButtonClick()"></div>
   </div> 
 </div>
 
