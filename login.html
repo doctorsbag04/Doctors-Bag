@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Doctors bag loginLogin</title>
+    <title>Doctors Bag Login</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-auth-compat.js"></script>
     <script>
@@ -12,7 +12,7 @@
         apiKey: "AIzaSyBEuDpfZzVsbxpZmPMMW9Awh9bNRjBzY5I",
         authDomain: "login-doctors-bag.firebaseapp.com",
         projectId: "login-doctors-bag",
-        storageBucket: "login-doctors-bag.firebasestorage.app",
+        storageBucket: "login-doctors-bag.appspot.com",
         messagingSenderId: "1076793472269",
         appId: "1:1076793472269:web:2dd35e08aac62ee8432c44",
         measurementId: "GTM-WFMXVGMD",
@@ -26,10 +26,13 @@
         const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider)
           .then((result) => {
-            // Redirect to index after successful login
+            console.log("User signed in:", result.user);
             window.location.href = "index.html";
           })
-          .catch((error) => console.error(error));
+          .catch((error) => {
+            console.error("Login failed:", error.message);
+            alert(`Error: ${error.message}`);
+          });
       }
     </script>
     <style>
