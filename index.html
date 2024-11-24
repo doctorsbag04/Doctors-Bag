@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="Utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>DOCTORS BAG</title>
-<head>
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+ <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-WFMXVGMD');</script>
 
+<meta charset="Utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DOCTORS BAG</title>
     <link rel="icon" href="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" type="image/png">
     <link rel="shortcut icon" href="https://i.postimg.cc/13JKJBXL/Picsart-24-05-27-16-22-03-467.png" type="image/png">
 <script>
@@ -24,6 +23,56 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+ <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-auth-compat.js"></script>
+    <script>
+      // Initialize Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyBEuDpfZzVsbxpZmPMMW9Awh9bNRjBzY5I",
+        authDomain: "login-doctors-bag.firebaseapp.com",
+        projectId: "login-doctors-bag",
+        storageBucket: "login-doctors-bag.firebasestorage.app",
+        messagingSenderId: "1076793472269",
+        appId: "1:1076793472269:web:2dd35e08aac62ee8432c44",
+        measurementId: "GTM-WFMXVGMD",
+        databaseURL: "https://login-doctors-bag-default-rtdb.firebaseio.com/",
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      const auth = firebase.auth();
+      let isLoggedIn = false;
+
+      // Check auth state
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          isLoggedIn = true;
+          localStorage.setItem("email", user.email);
+          localStorage.setItem("userUID", user.uid);
+          document.getElementById("loginButton").style.backgroundImage = `url(${user.photoURL})`;
+        } else {
+          isLoggedIn = false;
+          document.getElementById("loginButton").style.backgroundImage = "url('default-avatar.png')";
+        }
+      });
+
+      // Redirect to login page
+      function goToLoginPage() {
+        window.location.href = "login.html";
+      }
+
+          function handleButtonClick(pageUrl) {
+        if (isLoggedIn) {
+                 window.location.href = pageUrl;
+        } else {
+
+          goToLoginPage();
+
+        }
+      }
+    </script>
+
+
   </head>
 <style>
 body {
@@ -271,6 +320,20 @@ nav ul li a i {
   margin: 0;
 }
 
+#loginButton {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #ddd;
+        background-size: cover;
+        background-position: center;
+        cursor: pointer;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
 .carousel-container {
   position: relative;
   max-width: 100%;
@@ -414,6 +477,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button id="microphone-btn">
         <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
       </button>
+      <div id="loginButton" onclick="goToLoginPage()"></div>
     </div>
   </div> 
 </div>
@@ -422,7 +486,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <header>
    <nav id="nav-menu">
   <ul>
-    <li><a href="onlinemedicine.html"><img src="https://i.postimg.cc/76yg5kYp/Picsart-24-06-03-16-54-44-251.png" alt="Icon 1"> Online medicine</a></li>
+        <li><a href="onlinemedicine.html"><img src="https://i.postimg.cc/76yg5kYp/Picsart-24-06-03-16-54-44-251.png" alt="Icon 1"> Online medicine</a></li>
     <li><a href="contact.html"><img src="https://i.postimg.cc/VsWFbdt4/Picsart-24-06-03-16-54-55-386.png" alt="Icon 3"> Contact</a></li>
     <li><a href="about.html"><img src="https://i.postimg.cc/kG6h7CjL/Picsart-24-06-03-16-55-07-304.png" alt="Icon 2"> About</a></li>
     <li><a href="contactslist.html"><img src="https://i.postimg.cc/cCnzwGYg/Picsart-24-07-29-11-57-25-498.png" alt="Icon 3"> hospital contacts</a></li>
@@ -448,48 +512,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-  <div class="button-container">
-    <div class="button">
-      <a href="injury.html">
-        <img src="https://i.postimg.cc/44W2hkMq/Picsart-24-05-22-22-01-10-141.jpg">
-      </a>
-      <p>Injuries</p>
+<div class="button-container">
+  <div class="button">
+    <div onclick="handleButtonClick('injury.html')">
+      <img src="https://i.postimg.cc/44W2hkMq/Picsart-24-05-22-22-01-10-141.jpg" alt="Injuries">
     </div>
-    <div class="button">
-      <a href="animalbites.html">
-        <img src="https://i.postimg.cc/jdCgH3Y5/Picsart-24-05-22-22-13-31-828.jpg">
-      </a>
-      <p>Animal Bites</p>
-    </div>
-    <div class="button">
-      <a href="skinproblems.html">
-        <img src="https://i.postimg.cc/FHLTqfRX/Picsart-24-05-22-22-29-05-640.jpg">
-      </a>
-      <p>Skin Problems</p>
-    </div>
-    <div class="button">
-      <a href="healthproblems.html">
-        <img src="https://i.postimg.cc/dtXW4RJ9/Picsart-24-05-22-22-28-17-334.jpg">
-      </a>
-      <p>Health Issues</p>
-    </div>
+    <p>Injuries</p>
   </div>
+  <div class="button">
+    <div onclick="handleButtonClick('animalbites.html')">
+      <img src="https://i.postimg.cc/jdCgH3Y5/Picsart-24-05-22-22-13-31-828.jpg" alt="Animal Bites">
+    </div>
+    <p>Animal Bites</p>
+  </div>
+  <div class="button">
+    <div onclick="handleButtonClick('skinproblems.html')">
+      <img src="https://i.postimg.cc/FHLTqfRX/Picsart-24-05-22-22-29-05-640.jpg" alt="Skin Problems">
+    </div>
+    <p>Skin Problems</p>
+  </div>
+  <div class="button">
+    <div onclick="handleButtonClick('healthproblems.html')">
+      <img src="https://i.postimg.cc/dtXW4RJ9/Picsart-24-05-22-22-28-17-334.jpg" alt="Health Issues">
+    </div>
+    <p>Health Issues</p>
+  </div>
+</div>
+
 
 <div class="bottom-container">
     <div id="menu-btn-bottom">&#9776;</div>
-    <button id="diagnosis-btn-bottom">
-        <a href="diagnosis.html">
-            <img src="https://i.postimg.cc/L6nsX0Hd/Picsart-24-06-10-22-41-02-232.png" alt="Diagnosis">
-            <span>Diagnosis</span>
-        </a>
+    <button id="diagnosis-btn-bottom" onclick="handleButtonClick('diagnosis.html')">
+        <img src="https://i.postimg.cc/L6nsX0Hd/Picsart-24-06-10-22-41-02-232.png" alt="Diagnosis">
+        <span>Diagnosis</span>
     </button>
-    <button id="map-btn-bottom">
-        <a href="map.html">
-            <img src="https://i.postimg.cc/d0KQ5sGv/Picsart-24-06-10-22-39-45-771.png" alt="Map">
-            <span>Nearby Hospital</span>
-        </a>
+    <button id="map-btn-bottom" onclick="handleButtonClick('map.html')">
+        <img src="https://i.postimg.cc/d0KQ5sGv/Picsart-24-06-10-22-39-45-771.png" alt="Map">
+        <span>Nearby Hospital</span>
     </button>
 </div>
+
+
   <head><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2538051649617281"
      crossorigin="anonymous"></script>
 </head>
