@@ -55,6 +55,9 @@ if ('serviceWorker' in navigator) {
           document.getElementById("loginButton").style.backgroundImage = "url('default-avatar.png')";
         }
       });
+  function goToLoginPage() {
+    window.location.href = "login.html"; // Replace with the correct login page path
+  }
 
        function goToDashboardPage() {
     window.location.href = "profile.html"; // Replace with the correct dashboard page path
