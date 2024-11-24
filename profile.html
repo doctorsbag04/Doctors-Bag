@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-auth-compat.js"></script>
+    <script>
+      // Initialize Firebase (reuse the config from the main page)
+      const firebaseConfig = {
+        apiKey: "AIzaSyBEuDpfZzVsbxpZmPMMW9Awh9bNRjBzY5I",
+        authDomain: "login-doctors-bag.firebaseapp.com",
+        projectId: "login-doctors-bag",
+        storageBucket: "login-doctors-bag.firebasestorage.app",
+        messagingSenderId: "1076793472269",
+        appId: "1:1076793472269:web:2dd35e08aac62ee8432c44",
+        measurementId: "GTM-WFMXVGMD",
+        databaseURL: "https://login-doctors-bag-default-rtdb.firebaseio.com/",
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      const auth = firebase.auth();
+
+      // Fetch and display user details
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          document.getElementById("userName").textContent = user.displayName || "No Name Available";
+          document.getElementById("userEmail").textContent = user.email;
+          document.getElementById("userPhoto").src = user.photoURL || "default-avatar.png";
+        } else {
+          alert("You are not logged in. Redirecting to login page.");
+          window.location.href = "login.html"; // Replace with your login page URL
+        }
+      });
+
+      // Logout function
+      function logout() {
+        auth.signOut()
+          .then(() => {
+            alert("Logged out successfully.");
+            window.location.href = "index.html"; // Replace with your main page URL
+          })
+          .catch((error) => console.error(error));
+      }
+    </script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f0f2f5;
+      }
+
+      .user-container {
+        text-align: center;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        width: 300px;
+      }
+
+      .user-container img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+      }
+
+      .user-container button {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      .user-container button:hover {
+        background-color: #d32f2f;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="user-container">
+      <img id="userPhoto" alt="User Photo" />
+      <h3 id="userName"></h3>
+      <p id="userEmail"></p>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </body>
+</html>
