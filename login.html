@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctors bag loginLogin</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.8/firebase-auth-compat.js"></script>
+    <script>
+      // Initialize Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyBEuDpfZzVsbxpZmPMMW9Awh9bNRjBzY5I",
+        authDomain: "login-doctors-bag.firebaseapp.com",
+        projectId: "login-doctors-bag",
+        storageBucket: "login-doctors-bag.firebasestorage.app",
+        messagingSenderId: "1076793472269",
+        appId: "1:1076793472269:web:2dd35e08aac62ee8432c44",
+        measurementId: "GTM-WFMXVGMD",
+        databaseURL: "https://login-doctors-bag-default-rtdb.firebaseio.com/",
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      const auth = firebase.auth();
+
+      function login() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider)
+          .then((result) => {
+            // Redirect to index after successful login
+            window.location.href = "index.html";
+          })
+          .catch((error) => console.error(error));
+      }
+    </script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f2f5;
+      }
+
+      .login-container {
+        text-align: center;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #4285f4;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Login to Doctors Bag</h2>
+      <button onclick="login()">Log In with Google</button>
+    </div>
+  </body>
+</html>
