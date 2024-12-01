@@ -52,7 +52,7 @@ if ('serviceWorker' in navigator) {
           document.getElementById("loginButton").style.backgroundImage = `url(${user.photoURL})`;
         } else {
           isLoggedIn = false;
-          document.getElementById("loginButton").style.backgroundImage = "url('default-avatar.png')";
+          document.getElementById("loginButton").style.backgroundImage = "url('https://i.postimg.cc/9QwbNq3g/user-1.png')";
         }
       });
   function goToLoginPage() {
@@ -213,7 +213,7 @@ nav ul li a i {
   align-items: center;
   margin-top: 0;
   margin-right: auto;
-  width: 100%;
+  width: 90%;
   position: relative;
 }
 
@@ -332,17 +332,19 @@ nav ul li a i {
 }
 
 #loginButton {
-        position: absolute;
+       
+        display: block;
         top: 10px;
         right: 10px;
-        width: 30px;
-        height: 30px;
+        width: 40px;
+        margin-left: 10px;
+        height: 35px;
         border-radius: 50%;
         background-color: #ddd;
         background-size: cover;
         background-position: center;
         cursor: pointer;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 0px 1px rgba(0, 0, 0, 1);
       }
 
 .carousel-container {
@@ -489,8 +491,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <img src="https://i.postimg.cc/3NCN0Xj8/mic.png" alt="Microphone" width="24" height="24">
       </button>
         </div>
-     <div id="loginButton" onclick="handleLoginButtonClick()"></div>
   </div> 
+   <div id="loginButton" onclick="handleLoginButtonClick()"></div>
 </div>
 
 <div class="container">
